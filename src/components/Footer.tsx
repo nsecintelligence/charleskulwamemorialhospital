@@ -7,13 +7,15 @@ import type { ContactInfo } from '../types';
 export default function Footer() {
   const [contact, setContact] = useState<ContactInfo | null>(null);
   const [siteName, setSiteName] = useState('City Hospital');
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.from('contact_info').select('*').maybeSingle().then(({ data }) => {
       if (data) setContact(data);
     });
-    supabase.from('homepage_content').select('site_name').maybeSingle().then(({ data }) => {
+    supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle().then(({ data }) => {
       if (data?.site_name) setSiteName(data.site_name);
+      if (data?.site_logo_url) setLogoUrl(data.site_logo_url);
     });
   }, []);
 
@@ -22,11 +24,15 @@ export default function Footer() {
       <div className="container-width py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-7 h-7 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-xs">
-                {siteName.charAt(0)}
-              </div>
-              <span className="text-xl font-bold">{siteName}</span>
+            <div className="flex items-center gap-3 mb-4">
+              {logoUrl ? (
+                <img src={logoUrl} alt={siteName} className="h-12 w-12 object-contain rounded-full bg-white p-0.5" />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                  {siteName.charAt(0)}
+                </div>
+              )}
+              <span className="text-xl font-bold leading-tight">{siteName}</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Providing world-class healthcare with compassion and excellence since 1985.
