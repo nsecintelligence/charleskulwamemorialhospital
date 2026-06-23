@@ -10,7 +10,7 @@ export default function AdminHomepage() {
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     site_name: '', site_logo_url: '',
-    welcome_title: '', welcome_text: '', hero_image_url: '', hero_cta_text: '', hero_cta_link: '',
+    welcome_title: '', welcome_title_line2: '', welcome_text: '', hero_image_url: '', hero_cta_text: '', hero_cta_link: '',
     announcement_title: '', announcement_text: '', announcement_active: false,
   });
 
@@ -22,6 +22,7 @@ export default function AdminHomepage() {
           site_name: data.site_name || 'City Hospital',
           site_logo_url: data.site_logo_url || '',
           welcome_title: data.welcome_title,
+          welcome_title_line2: data.welcome_title_line2 || '',
           welcome_text: data.welcome_text,
           hero_image_url: data.hero_image_url || '',
           hero_cta_text: data.hero_cta_text,
@@ -71,9 +72,15 @@ export default function AdminHomepage() {
             </div>
           </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Welcome Title</label>
-          <input value={form.welcome_title} onChange={(e) => setForm({ ...form, welcome_title: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Welcome Title Line 1</label>
+            <input value={form.welcome_title} onChange={(e) => setForm({ ...form, welcome_title: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" placeholder="e.g. Charles Kulwa Memorial" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Welcome Title Line 2</label>
+            <input value={form.welcome_title_line2} onChange={(e) => setForm({ ...form, welcome_title_line2: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" placeholder="e.g. Hospital" />
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Welcome Text</label>

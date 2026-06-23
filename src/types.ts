@@ -79,6 +79,7 @@ export interface HomepageContent {
   site_name: string;
   site_logo_url: string | null;
   welcome_title: string;
+  welcome_title_line2: string | null;
   welcome_text: string;
   hero_image_url: string | null;
   hero_cta_text: string;

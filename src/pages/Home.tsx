@@ -67,8 +67,9 @@ export default function Home() {
               24/7 Emergency & Specialist Care
             </span>
             <h1 className="text-[2.6rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-5">
-              Charles Kulwa Memorial <br className="hidden sm:block" />
-              <span className="text-hospital-red">Hospital</span>
+              <span className="text-blue-500">{home?.welcome_title || 'Charles Kulwa Memorial'}</span>
+              <br className="hidden sm:block" />
+              <span className="text-hospital-red">{home?.welcome_title_line2 || 'Hospital'}</span>
             </h1>
             <p className="text-base md:text-lg text-white/80 mb-9 max-w-xl leading-relaxed">
               Compassionate, high-quality healthcare with modern facilities, experienced professionals, and patient-first service.
