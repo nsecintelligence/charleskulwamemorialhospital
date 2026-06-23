@@ -51,29 +51,41 @@ export default function Home() {
       )}
 
       {/* Hero */}
-      <section className="relative h-[500px] md:h-[600px] flex items-center">
+      <section className="relative h-[580px] md:h-[680px] flex items-center">
         <div className="absolute inset-0">
           <img
             src={home?.hero_image_url || 'https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
             alt="Hospital"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
         </div>
         <div className="relative container-width text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 max-w-2xl">
-            {home?.welcome_title || 'Welcome to City Hospital'}
-          </h1>
-          <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-xl leading-relaxed">
-            {home?.welcome_text || 'Providing world-class healthcare with compassion and excellence.'}
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <Link to={home?.hero_cta_link || '/contact'} className="btn-primary inline-flex items-center gap-2">
-              {home?.hero_cta_text || 'Book an Appointment'} <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link to="/services" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-colors">
-              Our Services
-            </Link>
+          <div className="max-w-2xl">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-white/90 mb-5">
+              <span className="w-8 h-0.5 bg-hospital-red" />
+              24/7 Emergency & Specialist Care
+            </span>
+            <h1 className="text-[2.6rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-5">
+              Charles Kulwa Memorial Hospital
+            </h1>
+            <p className="text-base md:text-lg text-white/80 mb-9 max-w-xl leading-relaxed">
+              Compassionate, high-quality healthcare with modern facilities, experienced professionals, and patient-first service.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to={home?.hero_cta_link || '/contact'}
+                className="inline-flex items-center gap-2 bg-hospital-red text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-hospital-red-dark transition-colors shadow-lg shadow-hospital-red/25"
+              >
+                {home?.hero_cta_text || 'Book an Appointment'} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/services"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg font-semibold border border-white/40 text-white hover:bg-white/10 hover:border-white/60 transition-all backdrop-blur-sm"
+              >
+                Our Services
+              </Link>
+            </div>
           </div>
         </div>
       </section>
