@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo } from '../types';
 
@@ -187,58 +187,50 @@ export default function Home() {
       )}
 
       {/* Contact / Need Help */}
-      <section className="section-padding bg-gradient-to-br from-hospital-green to-emerald-900 text-white">
+      <section className="py-10 md:py-12 bg-gradient-to-br from-green-700 to-emerald-900 text-white">
         <div className="container-width">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Need Help?</h2>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Need Help?</h2>
+            <p className="text-base text-white/80 max-w-2xl mx-auto">
               Our team is here to help you. Reach out for appointments, inquiries, or emergency assistance.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
-                <Phone className="w-6 h-6" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-semibold">Call Us</h3>
               </div>
-              <h3 className="text-lg font-semibold mb-1">Call Us</h3>
-              <p className="text-sm text-white/70 mb-2">General inquiries</p>
-              <a href={`tel:${contact?.phone || '+1 (555) 123-4567'}`} className="text-xl font-bold hover:text-white/90 transition-colors">
+              <a href={`tel:${contact?.phone || '+1 (555) 123-4567'}`} className="text-lg font-bold hover:text-white/90 transition-colors">
                 {contact?.phone || '+1 (555) 123-4567'}
               </a>
-              <p className="text-sm text-white/70 mt-3 mb-1">Emergency hotline</p>
-              <a href={`tel:${contact?.emergency_phone || '+1 (555) 911-0000'}`} className="text-lg font-bold text-red-300 hover:text-red-200 transition-colors">
-                {contact?.emergency_phone || '+1 (555) 911-0000'}
-              </a>
+              <p className="text-sm text-white/70 mt-2">Emergency: <a href={`tel:${contact?.emergency_phone || '+1 (555) 911-0000'}`} className="font-bold text-red-300 hover:text-red-200 transition-colors">{contact?.emergency_phone || '+1 (555) 911-0000'}</a></p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
-                <Mail className="w-6 h-6" />
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-semibold">Email Us</h3>
               </div>
-              <h3 className="text-lg font-semibold mb-1">Email Us</h3>
-              <p className="text-sm text-white/70 mb-2">Send us your questions</p>
               <a href={`mailto:${contact?.email || 'info@cityhospital.com'}`} className="text-lg font-bold hover:text-white/90 transition-colors">
                 {contact?.email || 'info@cityhospital.com'}
               </a>
-              <p className="text-sm text-white/70 mt-4">We typically respond within 24 hours.</p>
+              <p className="text-sm text-white/70 mt-2">We typically respond within 24 hours.</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 hover:bg-white/15 transition-colors">
-              <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mb-4">
-                <MapPin className="w-6 h-6" />
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20 hover:bg-white/15 transition-colors">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-semibold">Visit Us</h3>
               </div>
-              <h3 className="text-lg font-semibold mb-1">Visit Us</h3>
-              <p className="text-sm text-white/70 mb-2">Our location</p>
               <p className="text-base font-medium leading-relaxed">
                 {contact?.address || '123 Medical Center Drive, Healthcare City, HC 12345'}
               </p>
             </div>
-          </div>
-          <div className="text-center">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 bg-white text-hospital-green px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors shadow-lg"
-            >
-              Get in Touch <ArrowUpRight className="w-5 h-5" />
-            </Link>
           </div>
         </div>
       </section>
