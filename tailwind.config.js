@@ -5,10 +5,10 @@ export default {
     extend: {
       colors: {
         hospital: {
-          red: '#D32F2F',
-          'red-dark': '#B71C1C',
           green: '#2E7D32',
           'green-dark': '#1B5E20',
+          red: '#D32F2F',
+          'red-dark': '#B71C1C',
         },
       },
     },

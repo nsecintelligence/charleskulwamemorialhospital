@@ -40,7 +40,7 @@ export default function Home() {
     <div>
       {/* Announcement Banner */}
       {home?.announcement_active && (
-        <div className="bg-hospital-red text-white py-3">
+        <div className="bg-green-700 text-white py-3">
           <div className="container-width flex items-center gap-3 text-sm">
             <Activity className="w-5 h-5 flex-shrink-0" />
             <div>
@@ -63,13 +63,13 @@ export default function Home() {
         <div className="relative container-width text-white">
           <div className="max-w-2xl">
             <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-white/90 mb-5">
-              <span className="w-8 h-0.5 bg-hospital-red" />
+              <span className="w-8 h-0.5 bg-green-700" />
               24/7 Emergency & Specialist Care
             </span>
             <h1 className="text-[2.6rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-5">
               <span className="text-blue-500">{home?.welcome_title || 'Charles Kulwa Memorial'}</span>
               <br className="hidden sm:block" />
-              <span className="text-hospital-red">{home?.welcome_title_line2 || 'Hospital'}</span>
+              <span className="text-green-700">{home?.welcome_title_line2 || 'Hospital'}</span>
             </h1>
             <p className="text-base md:text-lg text-white/80 mb-9 max-w-xl leading-relaxed">
               Compassionate, high-quality healthcare with modern facilities, experienced professionals, and patient-first service.
@@ -77,7 +77,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <Link
                 to={home?.hero_cta_link || '/contact'}
-                className="inline-flex items-center gap-2 bg-hospital-red text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-hospital-red-dark transition-colors shadow-lg shadow-hospital-red/25"
+                className="inline-flex items-center gap-2 bg-green-700 text-white px-7 py-3.5 rounded-lg font-semibold hover:bg-green-800 transition-colors shadow-lg shadow-green-700/25"
               >
                 {home?.hero_cta_text || 'Book an Appointment'} <ArrowRight className="w-4 h-4" />
               </Link>
@@ -97,22 +97,22 @@ export default function Home() {
         <div className="container-width">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <Clock className="w-8 h-8 text-hospital-red mx-auto mb-2" />
+              <Clock className="w-8 h-8 text-green-700 mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">24/7</div>
               <div className="text-sm text-gray-600">Emergency Care</div>
             </div>
             <div className="text-center">
-              <Users className="w-8 h-8 text-hospital-red mx-auto mb-2" />
+              <Users className="w-8 h-8 text-green-700 mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">500+</div>
               <div className="text-sm text-gray-600">Medical Staff</div>
             </div>
             <div className="text-center">
-              <Award className="w-8 h-8 text-hospital-red mx-auto mb-2" />
+              <Award className="w-8 h-8 text-green-700 mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">40+</div>
               <div className="text-sm text-gray-600">Years of Service</div>
             </div>
             <div className="text-center">
-              <Activity className="w-8 h-8 text-hospital-red mx-auto mb-2" />
+              <Activity className="w-8 h-8 text-green-700 mx-auto mb-2" />
               <div className="text-2xl font-bold text-gray-900">50+</div>
               <div className="text-sm text-gray-600">Departments</div>
             </div>
@@ -137,7 +137,7 @@ export default function Home() {
                   <div className="p-5">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{service.name}</h3>
                     <p className="text-sm text-gray-600 line-clamp-3">{service.description}</p>
-                    <Link to={`/services`} className="inline-flex items-center gap-1 text-hospital-red text-sm font-medium mt-3 hover:underline">
+                    <Link to={`/services`} className="inline-flex items-center gap-1 text-green-700 text-sm font-medium mt-3 hover:underline">
                       Learn more <ChevronRight className="w-4 h-4" />
                     </Link>
                   </div>
@@ -168,7 +168,7 @@ export default function Home() {
                     <img src={item.featured_image || ''} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <div className="p-5">
-                    <div className="text-xs text-hospital-red font-medium mb-2">
+                    <div className="text-xs text-green-700 font-medium mb-2">
                       {new Date(item.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">{item.title}</h3>

@@ -18,14 +18,14 @@ export default function News() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
     <div>
-      <div className="bg-hospital-red text-white py-16">
+      <div className="bg-green-700 text-white py-16">
         <div className="container-width">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">News & Updates</h1>
           <p className="text-white/80 text-lg">Stay informed with the latest news from City Hospital.</p>
@@ -40,7 +40,7 @@ export default function News() {
                   <img src={item.featured_image || ''} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center gap-2 text-xs text-hospital-red font-medium mb-3">
+                  <div className="flex items-center gap-2 text-xs text-green-700 font-medium mb-3">
                     <Newspaper className="w-4 h-4" />
                     {new Date(item.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   </div>

@@ -17,7 +17,7 @@ export default function About() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -25,7 +25,7 @@ export default function About() {
   return (
     <div>
       {/* Page Header */}
-      <div className="bg-hospital-red text-white py-16">
+      <div className="bg-green-700 text-white py-16">
         <div className="container-width">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">About Us</h1>
           <p className="text-white/80 text-lg">Learn about our history, mission, and commitment to excellence.</p>
@@ -38,7 +38,7 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Award className="w-6 h-6 text-hospital-red" />
+                <Award className="w-6 h-6 text-green-700" />
                 <h2 className="text-3xl font-bold text-gray-900">Our History</h2>
               </div>
               <p className="text-gray-600 leading-relaxed whitespace-pre-line">{about?.history || 'Founded in 1985, our hospital has been serving the community for over 40 years.'}</p>
@@ -62,7 +62,7 @@ export default function About() {
             <div className="bg-white rounded-xl p-8 shadow-sm">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-lg bg-hospital-red/10 flex items-center justify-center">
-                  <Target className="w-6 h-6 text-hospital-red" />
+                  <Target className="w-6 h-6 text-green-700" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Our Mission</h3>
               </div>
@@ -86,7 +86,7 @@ export default function About() {
         <div className="container-width">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 mb-3">
-              <Heart className="w-6 h-6 text-hospital-red" />
+              <Heart className="w-6 h-6 text-green-700" />
               <h2 className="text-3xl font-bold text-gray-900">Our Core Values</h2>
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function About() {
             {(about?.core_values || 'Compassion, Integrity, Excellence, Innovation, Respect, Teamwork').split(',').map((value, i) => (
               <div key={i} className="bg-gray-50 rounded-lg p-6 text-center">
                 <div className="w-10 h-10 rounded-full bg-hospital-red/10 flex items-center justify-center mx-auto mb-3">
-                  <Heart className="w-5 h-5 text-hospital-red" />
+                  <Heart className="w-5 h-5 text-green-700" />
                 </div>
                 <h4 className="font-semibold text-gray-900">{value.trim()}</h4>
               </div>
@@ -107,7 +107,7 @@ export default function About() {
       <section className="section-padding bg-gray-50">
         <div className="container-width">
           <div className="flex items-center gap-2 mb-8">
-            <Users className="w-6 h-6 text-hospital-red" />
+            <Users className="w-6 h-6 text-green-700" />
             <h2 className="text-3xl font-bold text-gray-900">Leadership</h2>
           </div>
           <div className="bg-white rounded-xl p-8 shadow-sm">
@@ -120,7 +120,7 @@ export default function About() {
       <section className="section-padding bg-white">
         <div className="container-width">
           <div className="flex items-center gap-2 mb-8">
-            <Trophy className="w-6 h-6 text-hospital-red" />
+            <Trophy className="w-6 h-6 text-green-700" />
             <h2 className="text-3xl font-bold text-gray-900">Achievements & Milestones</h2>
           </div>
           <div className="bg-white rounded-xl p-8 shadow-sm border">

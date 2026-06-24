@@ -103,7 +103,7 @@ export default function ImageUpload({ value, onChange, label = 'Image', folder =
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-500 hover:border-hospital-red hover:text-hospital-red transition-colors disabled:opacity-50"
+          className="w-full h-48 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-500 hover:border-green-700 hover:text-green-700 transition-colors disabled:opacity-50"
         >
           {uploading ? (
             <Loader2 className="w-8 h-8 animate-spin" />

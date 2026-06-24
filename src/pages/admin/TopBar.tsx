@@ -67,7 +67,7 @@ export default function AdminTopBar() {
             <input
               value={form.emergency_phone}
               onChange={(e) => setForm({ ...form, emergency_phone: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
             />
           </div>
           <div>
@@ -75,7 +75,7 @@ export default function AdminTopBar() {
             <input
               value={form.working_hours}
               onChange={(e) => setForm({ ...form, working_hours: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
             />
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function AdminTopBar() {
             max={120}
             value={form.marquee_speed}
             onChange={(e) => setForm({ ...form, marquee_speed: parseInt(e.target.value) || 30 })}
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+            className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
           />
           <p className="text-xs text-gray-500 mt-1">Lower = faster scrolling. Default is 30 seconds.</p>
         </div>
@@ -99,7 +99,7 @@ export default function AdminTopBar() {
             id="is_active"
             checked={form.is_active}
             onChange={(e) => setForm({ ...form, is_active: e.target.checked })}
-            className="w-4 h-4 text-hospital-red rounded"
+            className="w-4 h-4 text-green-700 rounded"
           />
           <label htmlFor="is_active" className="text-sm font-medium text-gray-700">Show Marquee Announcements</label>
         </div>
@@ -111,7 +111,7 @@ export default function AdminTopBar() {
               value={newAnnouncement}
               onChange={(e) => setNewAnnouncement(e.target.value)}
               placeholder="Enter announcement text..."
-              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
               onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addAnnouncement(); } }}
             />
             <button
@@ -125,7 +125,7 @@ export default function AdminTopBar() {
           <div className="space-y-2">
             {form.announcements.map((text, i) => (
               <div key={i} className="flex items-center gap-3 bg-gray-50 rounded-lg px-3 py-2">
-                <span className="w-2 h-2 rounded-full bg-hospital-red flex-shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-green-700 flex-shrink-0" />
                 <span className="flex-1 text-sm text-gray-700">{text}</span>
                 <button
                   type="button"

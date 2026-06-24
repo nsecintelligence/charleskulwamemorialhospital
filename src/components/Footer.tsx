@@ -28,7 +28,7 @@ export default function Footer() {
               {logoUrl ? (
                 <img src={logoUrl} alt={siteName} className="h-12 w-12 object-contain rounded-full bg-white p-0.5" />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                <div className="w-12 h-12 rounded-full bg-green-700 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                   {siteName.charAt(0)}
                 </div>
               )}
@@ -52,20 +52,20 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <div className="space-y-3 text-sm text-gray-400">
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 text-hospital-red" />
+                <MapPin className="w-4 h-4 mt-0.5 text-green-700" />
                 <span>{contact?.address || '123 Medical Center Drive, Healthcare City, HC 12345'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-hospital-red" />
+                <Phone className="w-4 h-4 text-green-700" />
                 <span>{contact?.phone || '+1 (555) 123-4567'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-hospital-red" />
+                <Mail className="w-4 h-4 text-green-700" />
                 <span>{contact?.email || 'info@cityhospital.com'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-hospital-red" />
-                <span className="text-hospital-red font-semibold">Emergency: {contact?.emergency_phone || '+1 (555) 911-0000'}</span>
+                <Phone className="w-4 h-4 text-green-700" />
+                <span className="text-red-700 font-semibold">Emergency: {contact?.emergency_phone || '+1 (555) 911-0000'}</span>
               </div>
             </div>
           </div>
@@ -73,22 +73,22 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
             <div className="flex gap-3">
               {contact?.social_facebook && (
-                <a href={contact.social_facebook} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-hospital-red transition-colors">
+                <a href={contact.social_facebook} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                   <Facebook className="w-4 h-4" />
                 </a>
               )}
               {contact?.social_twitter && (
-                <a href={contact.social_twitter} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-hospital-red transition-colors">
+                <a href={contact.social_twitter} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                   <Twitter className="w-4 h-4" />
                 </a>
               )}
               {contact?.social_instagram && (
-                <a href={contact.social_instagram} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-hospital-red transition-colors">
+                <a href={contact.social_instagram} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                   <Instagram className="w-4 h-4" />
                 </a>
               )}
               {contact?.social_linkedin && (
-                <a href={contact.social_linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-hospital-red transition-colors">
+                <a href={contact.social_linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                   <Linkedin className="w-4 h-4" />
                 </a>
               )}

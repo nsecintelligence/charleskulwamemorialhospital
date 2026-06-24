@@ -54,7 +54,7 @@ export default function AdminLayout() {
       >
         <div className="p-5 border-b border-gray-800">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-xs">
+            <div className="w-6 h-6 rounded-full bg-green-700 flex items-center justify-center text-white font-bold text-xs">
               {siteName.charAt(0)}
             </div>
             <span className="font-bold text-lg">{siteName}</span>
@@ -71,7 +71,7 @@ export default function AdminLayout() {
                 to={link.path}
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
-                  isActive ? 'bg-hospital-red text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  isActive ? 'bg-green-700 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <Icon className="w-4 h-4" />

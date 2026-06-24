@@ -24,14 +24,14 @@ export default function Contact() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
     <div>
-      <div className="bg-hospital-red text-white py-16">
+      <div className="bg-green-700 text-white py-16">
         <div className="container-width">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">Contact Us</h1>
           <p className="text-white/80 text-lg">We are here to help. Reach out anytime.</p>
@@ -45,8 +45,8 @@ export default function Contact() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4 bg-white p-5 rounded-xl shadow-sm">
-                  <div className="w-12 h-12 rounded-lg bg-hospital-red/10 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 text-hospital-red" />
+                  <div className="w-12 h-12 rounded-lg bg-green-700/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Address</h4>
@@ -54,18 +54,18 @@ export default function Contact() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4 bg-white p-5 rounded-xl shadow-sm">
-                  <div className="w-12 h-12 rounded-lg bg-hospital-red/10 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-hospital-red" />
+                  <div className="w-12 h-12 rounded-lg bg-green-700/10 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Phone</h4>
                     <p className="text-gray-600 text-sm">{contact?.phone || '+1 (555) 123-4567'}</p>
-                    <p className="text-hospital-red text-sm font-semibold">Emergency: {contact?.emergency_phone || '+1 (555) 911-0000'}</p>
+                    <p className="text-red-700 text-sm font-semibold">Emergency: {contact?.emergency_phone || '+1 (555) 911-0000'}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 bg-white p-5 rounded-xl shadow-sm">
-                  <div className="w-12 h-12 rounded-lg bg-hospital-red/10 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-hospital-red" />
+                  <div className="w-12 h-12 rounded-lg bg-green-700/10 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Email</h4>
@@ -73,8 +73,8 @@ export default function Contact() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4 bg-white p-5 rounded-xl shadow-sm">
-                  <div className="w-12 h-12 rounded-lg bg-hospital-red/10 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-hospital-red" />
+                  <div className="w-12 h-12 rounded-lg bg-green-700/10 flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-5 h-5 text-green-700" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Working Hours</h4>
@@ -105,7 +105,7 @@ export default function Contact() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Send a Message</h2>
               {submitted ? (
                 <div className="bg-white rounded-xl p-8 shadow-sm text-center">
-                  <CheckCircle className="w-16 h-16 text-hospital-green mx-auto mb-4" />
+                  <CheckCircle className="w-16 h-16 text-green-700 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Message Sent!</h3>
                   <p className="text-gray-600">Thank you for reaching out. We will get back to you soon.</p>
                 </div>
@@ -118,7 +118,7 @@ export default function Contact() {
                       required
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
                     />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -129,7 +129,7 @@ export default function Contact() {
                         required
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
                       />
                     </div>
                     <div>
@@ -138,7 +138,7 @@ export default function Contact() {
                         type="tel"
                         value={form.phone}
                         onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
                       />
                     </div>
                   </div>
@@ -149,7 +149,7 @@ export default function Contact() {
                       required
                       value={form.subject}
                       onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
                     />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ export default function Contact() {
                       rows={5}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none resize-none"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none resize-none"
                     />
                   </div>
                   <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">

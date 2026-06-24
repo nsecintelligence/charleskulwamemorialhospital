@@ -20,7 +20,7 @@ export default function NewsDetail() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -30,7 +30,7 @@ export default function NewsDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Article Not Found</h2>
-          <Link to="/news" className="text-hospital-red hover:underline">Back to News</Link>
+          <Link to="/news" className="text-green-700 hover:underline">Back to News</Link>
         </div>
       </div>
     );
@@ -38,7 +38,7 @@ export default function NewsDetail() {
 
   return (
     <div>
-      <div className="bg-hospital-red text-white py-12">
+      <div className="bg-green-700 text-white py-12">
         <div className="container-width">
           <Link to="/news" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4 text-sm">
             <ArrowLeft className="w-4 h-4" /> Back to News

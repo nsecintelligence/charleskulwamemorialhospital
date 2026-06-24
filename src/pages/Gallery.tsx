@@ -25,14 +25,14 @@ export default function Gallery() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
     <div>
-      <div className="bg-hospital-red text-white py-16">
+      <div className="bg-green-700 text-white py-16">
         <div className="container-width">
           <h1 className="text-4xl md:text-5xl font-bold mb-3">Photo Gallery</h1>
           <p className="text-white/80 text-lg">Explore our facilities, events, and community.</p>
@@ -45,7 +45,7 @@ export default function Gallery() {
               <button
                 onClick={() => setActiveCategory('all')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeCategory === 'all' ? 'bg-hospital-red text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                  activeCategory === 'all' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 All
@@ -55,7 +55,7 @@ export default function Gallery() {
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors ${
-                    activeCategory === cat ? 'bg-hospital-red text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+                    activeCategory === cat ? 'bg-green-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   {cat}

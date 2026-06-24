@@ -40,7 +40,7 @@ export default function AdminAbout() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" /></div>;
+    return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-green-700 border-t-transparent rounded-full animate-spin" /></div>;
   }
 
   return (
@@ -49,7 +49,7 @@ export default function AdminAbout() {
       <form onSubmit={handleSave} className="bg-white rounded-xl shadow-sm p-6 space-y-5">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">History</label>
-          <textarea rows={5} value={form.history} onChange={(e) => setForm({ ...form, history: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <textarea rows={5} value={form.history} onChange={(e) => setForm({ ...form, history: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <ImageUpload
           value={form.history_image}
@@ -59,23 +59,23 @@ export default function AdminAbout() {
         />
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Mission</label>
-          <textarea rows={3} value={form.mission} onChange={(e) => setForm({ ...form, mission: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <textarea rows={3} value={form.mission} onChange={(e) => setForm({ ...form, mission: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Vision</label>
-          <textarea rows={3} value={form.vision} onChange={(e) => setForm({ ...form, vision: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <textarea rows={3} value={form.vision} onChange={(e) => setForm({ ...form, vision: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Core Values (comma-separated)</label>
-          <input value={form.core_values} onChange={(e) => setForm({ ...form, core_values: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <input value={form.core_values} onChange={(e) => setForm({ ...form, core_values: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Management</label>
-          <textarea rows={4} value={form.management} onChange={(e) => setForm({ ...form, management: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <textarea rows={4} value={form.management} onChange={(e) => setForm({ ...form, management: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Achievements (one per line)</label>
-          <textarea rows={6} value={form.achievements} onChange={(e) => setForm({ ...form, achievements: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none" />
+          <textarea rows={6} value={form.achievements} onChange={(e) => setForm({ ...form, achievements: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none" />
         </div>
         <button type="submit" disabled={saving} className="btn-primary inline-flex items-center gap-2">
           <Save className="w-4 h-4" /> {saving ? 'Saving...' : 'Save Changes'}

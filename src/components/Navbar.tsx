@@ -39,7 +39,7 @@ export default function Navbar() {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="bg-hospital-red text-white py-2 overflow-hidden">
+      <div className="bg-red-700 text-white py-2 overflow-hidden">
         <div className="container-width flex items-center gap-4 text-sm">
           {/* Left: Emergency */}
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -92,13 +92,13 @@ export default function Navbar() {
             {siteLogo ? (
               <img src={siteLogo} alt={siteName} className="h-8 w-auto" loading="lazy" />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-8 h-8 rounded-full bg-red-700 flex items-center justify-center text-white font-bold text-sm">
                 {siteName.charAt(0)}
               </div>
             )}
             <div className="flex flex-col">
-              <span className="text-hospital-red font-bold text-lg leading-tight">{siteName}</span>
-              <span className="text-hospital-green text-xs font-medium leading-tight">Excellence in Care</span>
+              <span className="text-green-700 font-bold text-lg leading-tight">{siteName}</span>
+              <span className="text-green-700 text-xs font-medium leading-tight">Excellence in Care</span>
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-1">
@@ -108,8 +108,8 @@ export default function Navbar() {
                 to={link.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === link.path
-                    ? 'text-hospital-red bg-red-50'
-                    : 'text-gray-700 hover:text-hospital-red hover:bg-gray-50'
+                    ? 'text-green-700 bg-red-50'
+                    : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
                 }`}
               >
                 {link.label}
@@ -135,8 +135,8 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className={`block px-3 py-2 rounded-md text-sm font-medium ${
                   location.pathname === link.path
-                    ? 'text-hospital-red bg-red-50'
-                    : 'text-gray-700 hover:text-hospital-red hover:bg-gray-50'
+                    ? 'text-green-700 bg-red-50'
+                    : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
                 }`}
               >
                 {link.label}

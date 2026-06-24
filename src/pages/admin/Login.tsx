@@ -50,7 +50,7 @@ export default function AdminLogin() {
             {siteLogo ? (
               <img src={siteLogo} alt={siteName} className="h-10 w-auto" />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-hospital-red flex items-center justify-center text-white font-bold text-lg">
+              <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold text-lg">
                 {siteName.charAt(0)}
               </div>
             )}
@@ -73,7 +73,7 @@ export default function AdminLogin() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
             />
           </div>
           <div>
@@ -84,7 +84,7 @@ export default function AdminLogin() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-hospital-red focus:border-transparent outline-none"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-700 focus:border-transparent outline-none"
             />
           </div>
           <button
@@ -98,7 +98,7 @@ export default function AdminLogin() {
         <div className="mt-6 text-center">
           <button
             onClick={() => { setIsSignUp(!isSignUp); setError(''); }}
-            className="text-sm text-hospital-red hover:underline"
+            className="text-sm text-green-700 hover:underline"
           >
             {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
           </button>
