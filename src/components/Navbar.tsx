@@ -98,7 +98,7 @@ export default function Navbar() {
             )}
             <div className="flex flex-col">
               <span className="text-green-700 font-bold text-lg leading-tight">{siteName}</span>
-              <span className="text-green-700 text-xs font-medium leading-tight">Excellence in Care</span>
+              <span className="text-green-700 text-xs font-medium leading-tight">Patient Needs Come First</span>
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-1">
