@@ -108,12 +108,12 @@ export default function Home() {
             </div>
             <div className="text-center">
               <Award className="w-8 h-8 text-green-700 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">40+</div>
+              <div className="text-2xl font-bold text-gray-900">10+</div>
               <div className="text-sm text-gray-600">Years of Service</div>
             </div>
             <div className="text-center">
               <Activity className="w-8 h-8 text-green-700 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-gray-900">50+</div>
+              <div className="text-2xl font-bold text-gray-900">15+</div>
               <div className="text-sm text-gray-600">Departments</div>
             </div>
           </div>
