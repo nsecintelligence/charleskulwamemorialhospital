@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide } from '../types';
 
@@ -231,6 +231,80 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Insurance Services */}
+      <section className="section-padding bg-gradient-to-br from-emerald-50 to-green-50">
+        <div className="container-width">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+              <ShieldCheck className="w-4 h-4" />
+              Insurance Partners
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Insurance Services</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">We work with major insurance providers to ensure accessible and affordable healthcare for all our patients.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+            {/* NHIF */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-lg">NHIF</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">NHIF</h3>
+              <p className="text-xs text-gray-500">National Health Insurance Fund</p>
+            </div>
+
+            {/* Strategies */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-base">STR</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Strategies</h3>
+              <p className="text-xs text-gray-500">Insurance Solutions</p>
+            </div>
+
+            {/* Jubilee */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-base">JB</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Jubilee</h3>
+              <p className="text-xs text-gray-500">Jubilee Insurance</p>
+            </div>
+
+            {/* NSSF */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-lg">NSSF</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">NSSF</h3>
+              <p className="text-xs text-gray-500">National Social Security Fund</p>
+            </div>
+
+            {/* Assemble */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg shadow-rose-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-base">ASM</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Assemble</h3>
+              <p className="text-xs text-gray-500">Healthcare Coverage</p>
+            </div>
+          </div>
+
+          {/* Info Box */}
+          <div className="mt-10 bg-white rounded-xl border border-emerald-100 p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-gray-700">
+              <ShieldCheck className="w-6 h-6 text-emerald-600 flex-shrink-0" />
+              <p className="text-sm">We accept multiple insurance plans. Contact us to verify your coverage and benefits.</p>
+            </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-medium hover:bg-emerald-700 transition-colors text-sm whitespace-nowrap"
+            >
+              Verify Your Insurance <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Latest News */}
       {latestNews.length > 0 && (
