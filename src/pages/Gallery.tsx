@@ -67,7 +67,7 @@ export default function Gallery() {
             {filtered.map((item) => (
               <div key={item.id} className="group relative rounded-xl overflow-hidden bg-white shadow-sm">
                 <div className="h-64 overflow-hidden">
-                  <img src={item.image_url} alt={item.caption || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={item.image_url} alt={item.caption || ''} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 {item.caption && (
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">

@@ -37,7 +37,7 @@ export default function News() {
             {items.map((item) => (
               <Link key={item.id} to={`/news/${item.id}`} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group">
                 <div className="h-52 overflow-hidden">
-                  <img src={item.featured_image || ''} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={item.featured_image || ''} alt={item.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-xs text-green-700 font-medium mb-3">

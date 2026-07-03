@@ -13,6 +13,10 @@ import {
   LogOut,
   Menu,
   PanelTop,
+  Sliders,
+  DollarSign,
+  FileText,
+  Calendar,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -20,6 +24,7 @@ import { supabase } from '../../lib/supabase';
 const adminLinks = [
   { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/admin/homepage', label: 'Homepage', icon: Home },
+  { path: '/admin/hero-slides', label: 'Hero Slides', icon: Sliders },
   { path: '/admin/top-bar', label: 'Top Bar', icon: PanelTop },
   { path: '/admin/services', label: 'Services', icon: Stethoscope },
   { path: '/admin/departments', label: 'Departments', icon: Building2 },
@@ -28,6 +33,9 @@ const adminLinks = [
   { path: '/admin/news', label: 'News', icon: Newspaper },
   { path: '/admin/faq', label: 'FAQ', icon: HelpCircle },
   { path: '/admin/contact', label: 'Contact', icon: Phone },
+  { path: '/admin/prices', label: 'Prices', icon: DollarSign },
+  { path: '/admin/forms', label: 'Forms', icon: FileText },
+  { path: '/admin/appointments', label: 'Appointments', icon: Calendar },
 ];
 
 export default function AdminLayout() {

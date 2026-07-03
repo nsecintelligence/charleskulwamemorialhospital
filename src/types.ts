@@ -99,3 +99,49 @@ export interface TopBar {
   is_active: boolean;
   updated_at: string;
 }
+
+export interface HeroSlide {
+  id: string;
+  image_url: string;
+  title: string | null;
+  subtitle: string | null;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface Appointment {
+  id: string;
+  patient_name: string;
+  patient_phone: string;
+  patient_email: string | null;
+  department: string | null;
+  service: string | null;
+  preferred_date: string;
+  preferred_time: string | null;
+  message: string | null;
+  status: string;
+  created_at: string;
+}
+
+export interface DownloadableForm {
+  id: string;
+  name: string;
+  description: string | null;
+  file_url: string;
+  category: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface ServicePrice {
+  id: string;
+  service_name: string;
+  category: string | null;
+  price: number;
+  currency: string;
+  description: string | null;
+  is_active: boolean;
+  created_at: string;
+}

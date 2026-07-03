@@ -20,6 +20,10 @@ import AdminFAQ from './pages/admin/FAQ';
 import AdminContact from './pages/admin/Contact';
 import AdminHomepage from './pages/admin/Homepage';
 import AdminTopBar from './pages/admin/TopBar';
+import AdminHeroSlides from './pages/admin/HeroSlides';
+import AdminForms from './pages/admin/Forms';
+import AdminPrices from './pages/admin/Prices';
+import AdminAppointments from './pages/admin/Appointments';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -49,7 +53,11 @@ function App() {
           <Route path="faq" element={<AdminFAQ />} />
           <Route path="contact" element={<AdminContact />} />
           <Route path="homepage" element={<AdminHomepage />} />
+          <Route path="hero-slides" element={<AdminHeroSlides />} />
           <Route path="top-bar" element={<AdminTopBar />} />
+          <Route path="forms" element={<AdminForms />} />
+          <Route path="prices" element={<AdminPrices />} />
+          <Route path="appointments" element={<AdminAppointments />} />
         </Route>
       </Routes>
     </BrowserRouter>

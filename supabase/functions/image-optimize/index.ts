@@ -1,46 +1,78 @@
-import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.0";
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response(null, { status: 200, headers: corsHeaders });
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 200, headers: corsHeaders });
+  }
 
   try {
     const url = new URL(req.url);
     const path = url.searchParams.get("path");
-    const width = parseInt(url.searchParams.get("w") || "800", 10);
-    const quality = parseInt(url.searchParams.get("q") || "80", 10);
 
-    if (!path) return new Response(JSON.stringify({ error: "Missing path" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    if (!path) {
+      return new Response(JSON.stringify({ error: "Missing path parameter" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    const supabase = createClient(
-      Deno.env.get("SUPABASE_URL") || "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
-    );
+    // Security: prevent path traversal
+    if (path.includes("..") || path.startsWith("/") || path.includes("\\")) {
+      return new Response(JSON.stringify({ error: "Invalid path" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
-    const { data: file, error } = await supabase.storage.from("hospital-images").download(path);
-    if (error || !file) throw new Error("File not found");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-    const bytes = new Uint8Array(await file.arrayBuffer());
-    const isJpeg = bytes[0] === 0xff && bytes[1] === 0xd8;
-    const isPng = bytes[0] === 0x89 && bytes[1] === 0x50;
-    const contentType = isJpeg ? "image/jpeg" : isPng ? "image/png" : "image/webp";
+    if (!supabaseUrl || !serviceKey) {
+      throw new Error("Missing environment variables");
+    }
 
-    return new Response(bytes, {
+    // Direct fetch from storage URL for better performance
+    const storageUrl = `${supabaseUrl}/storage/v1/object/public/hospital-images/${path}`;
+
+    const response = await fetch(storageUrl, {
+      headers: {
+        "Authorization": `Bearer ${serviceKey}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("File not found");
+    }
+
+    const blob = await response.blob();
+    const contentType = response.headers.get("Content-Type") || "image/jpeg";
+
+    // Validate content type is an image
+    if (!contentType.startsWith("image/")) {
+      throw new Error("Invalid file type");
+    }
+
+    return new Response(blob, {
       status: 200,
       headers: {
         ...corsHeaders,
         "Content-Type": contentType,
         "Cache-Control": "public, max-age=31536000, immutable",
-        "Content-Disposition": "inline",
+        "CDN-Cache-Control": "public, max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
       },
     });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return new Response(JSON.stringify({ error: message }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 });
