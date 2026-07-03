@@ -17,18 +17,21 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [siteName, setSiteName] = useState('City Hospital');
+  const [loading, setLoading] = useState(true);
+  const [siteName, setSiteName] = useState('');
   const [siteLogo, setSiteLogo] = useState<string | null>(null);
   const [topBar, setTopBar] = useState<TopBar | null>(null);
   const location = useLocation();
 
   useEffect(() => {
-    supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle().then(({ data }) => {
-      if (data?.site_name) setSiteName(data.site_name);
-      if (data?.site_logo_url) setSiteLogo(data.site_logo_url);
-    });
-    supabase.from('top_bar').select('*').maybeSingle().then(({ data }) => {
-      if (data) setTopBar(data);
+    Promise.all([
+      supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle(),
+      supabase.from('top_bar').select('*').maybeSingle(),
+    ]).then(([homeRes, topBarRes]) => {
+      if (homeRes.data?.site_name) setSiteName(homeRes.data.site_name);
+      if (homeRes.data?.site_logo_url) setSiteLogo(homeRes.data.site_logo_url);
+      if (topBarRes.data) setTopBar(topBarRes.data);
+      setLoading(false);
     });
   }, []);
 
@@ -36,19 +39,78 @@ export default function Navbar() {
   const hasAnnouncements = announcements.length > 0 && topBar?.is_active;
   const marqueeSpeed = topBar?.marquee_speed || 30;
 
+  // Show skeleton while loading to prevent flash of default values
+  if (loading) {
+    return (
+      <header className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="bg-red-700 text-white py-2 h-9" />
+        <div className="container-width">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-gray-200 animate-pulse" />
+              <div className="space-y-1">
+                <div className="w-32 h-4 bg-gray-200 rounded animate-pulse" />
+                <div className="w-20 h-2 bg-gray-200 rounded animate-pulse" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Bar */}
       <div className="bg-red-700 text-white py-2 overflow-hidden">
-        <div className="container-width flex items-center gap-4 text-sm">
-          {/* Left: Emergency */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Phone className="w-4 h-4" />
-            <span className="font-medium">Emergency: {topBar?.emergency_phone || '+1 (555) 911-0000'}</span>
+        <div className="container-width">
+          {/* Desktop Layout */}
+          <div className="hidden md:flex items-center gap-4 text-sm">
+            {/* Left: Emergency */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Phone className="w-4 h-4" />
+              <span className="font-medium">Emergency: {topBar?.emergency_phone || '+1 (555) 911-0000'}</span>
+            </div>
+
+            {/* Center: Marquee */}
+            <div className="flex-1 overflow-hidden">
+              {hasAnnouncements ? (
+                <div className="relative overflow-hidden">
+                  <div
+                    className="whitespace-nowrap animate-marquee inline-block"
+                    style={{ animationDuration: `${marqueeSpeed}s` }}
+                  >
+                    {announcements.map((text, i) => (
+                      <span key={i} className="inline-flex items-center gap-2 mx-8">
+                        <span className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse" />
+                        <span className="font-medium">{text}</span>
+                      </span>
+                    ))}
+                    {/* Duplicate for seamless loop */}
+                    {announcements.map((text, i) => (
+                      <span key={`dup-${i}`} className="inline-flex items-center gap-2 mx-8">
+                        <span className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse" />
+                        <span className="font-medium">{text}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center text-white/80">
+                  <span>Mon-Sun: 24/7</span>
+                </div>
+              )}
+            </div>
+
+            {/* Right: Working Hours */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Clock className="w-4 h-4" />
+              <span>{topBar?.working_hours || 'Mon-Sun: 24/7'}</span>
+            </div>
           </div>
 
-          {/* Center: Marquee */}
-          <div className="flex-1 overflow-hidden hidden md:block">
+          {/* Mobile Layout - scrolling marquee */}
+          <div className="md:hidden overflow-hidden text-xs">
             {hasAnnouncements ? (
               <div className="relative overflow-hidden">
                 <div
@@ -56,31 +118,32 @@ export default function Navbar() {
                   style={{ animationDuration: `${marqueeSpeed}s` }}
                 >
                   {announcements.map((text, i) => (
-                    <span key={i} className="inline-flex items-center gap-2 mx-8">
-                      <span className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse" />
+                    <span key={i} className="inline-flex items-center gap-2 mx-4">
+                      <Phone className="w-3 h-3 flex-shrink-0" />
                       <span className="font-medium">{text}</span>
                     </span>
                   ))}
-                  {/* Duplicate for seamless loop */}
                   {announcements.map((text, i) => (
-                    <span key={`dup-${i}`} className="inline-flex items-center gap-2 mx-8">
-                      <span className="w-2 h-2 rounded-full bg-yellow-300 animate-pulse" />
+                    <span key={`dup-${i}`} className="inline-flex items-center gap-2 mx-4">
+                      <Phone className="w-3 h-3 flex-shrink-0" />
                       <span className="font-medium">{text}</span>
                     </span>
                   ))}
                 </div>
               </div>
             ) : (
-              <div className="text-center text-white/80">
-                <span>Mon-Sun: 24/7</span>
+              <div className="flex items-center justify-center gap-3">
+                <span className="flex items-center gap-1">
+                  <Phone className="w-3 h-3" />
+                  Emergency: {topBar?.emergency_phone || '+1 (555) 911-0000'}
+                </span>
+                <span className="text-white/60">|</span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {topBar?.working_hours || '24/7'}
+                </span>
               </div>
             )}
-          </div>
-
-          {/* Right: Working Hours */}
-          <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-            <Clock className="w-4 h-4" />
-            <span>{topBar?.working_hours || 'Mon-Sun: 24/7'}</span>
           </div>
         </div>
       </div>

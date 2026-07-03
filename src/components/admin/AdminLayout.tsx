@@ -42,7 +42,7 @@ export default function AdminLayout() {
   const { signOut, user } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [siteName, setSiteName] = useState('City Hospital');
+  const [siteName, setSiteName] = useState('');
 
   useEffect(() => {
     supabase.from('homepage_content').select('site_name').maybeSingle().then(({ data }) => {

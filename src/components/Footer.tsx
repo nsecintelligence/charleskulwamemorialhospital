@@ -6,18 +6,34 @@ import type { ContactInfo } from '../types';
 
 export default function Footer() {
   const [contact, setContact] = useState<ContactInfo | null>(null);
-  const [siteName, setSiteName] = useState('City Hospital');
+  const [siteName, setSiteName] = useState('');
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.from('contact_info').select('*').maybeSingle().then(({ data }) => {
-      if (data) setContact(data);
-    });
-    supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle().then(({ data }) => {
-      if (data?.site_name) setSiteName(data.site_name);
-      if (data?.site_logo_url) setLogoUrl(data.site_logo_url);
+    Promise.all([
+      supabase.from('contact_info').select('*').maybeSingle(),
+      supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle(),
+    ]).then(([contactRes, homeRes]) => {
+      if (contactRes.data) setContact(contactRes.data);
+      if (homeRes.data?.site_name) setSiteName(homeRes.data.site_name);
+      if (homeRes.data?.site_logo_url) setLogoUrl(homeRes.data.site_logo_url);
+      setLoading(false);
     });
   }, []);
+
+  // Show minimal footer while loading to prevent flash of default values
+  if (loading) {
+    return (
+      <footer className="bg-gray-900 text-white">
+        <div className="container-width py-12">
+          <div className="flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="bg-gray-900 text-white">

@@ -10,7 +10,7 @@ export default function AdminLogin() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [siteName, setSiteName] = useState('City Hospital');
+  const [siteName, setSiteName] = useState('');
   const [siteLogo, setSiteLogo] = useState<string | null>(null);
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
