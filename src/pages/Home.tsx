@@ -246,8 +246,13 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
             {/* NHIF */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-lg">NHIF</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/services/MHIF_IMAGE.jpg"
+                  alt="NHIF"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">NHIF</h3>
               <p className="text-xs text-gray-500">National Health Insurance Fund</p>
@@ -255,8 +260,13 @@ export default function Home() {
 
             {/* Strategies */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-base">STR</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/services/STRATEGIES_IMAGE.jpg"
+                  alt="Strategies"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Strategies</h3>
               <p className="text-xs text-gray-500">Insurance Solutions</p>
@@ -264,8 +274,13 @@ export default function Home() {
 
             {/* Jubilee */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-base">JB</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/services/JUBILEE_INSURANCE.png"
+                  alt="Jubilee Insurance"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Jubilee</h3>
               <p className="text-xs text-gray-500">Jubilee Insurance</p>
@@ -273,8 +288,13 @@ export default function Home() {
 
             {/* NSSF */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-lg">NSSF</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/services/NSSF.jpg"
+                  alt="NSSF"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">NSSF</h3>
               <p className="text-xs text-gray-500">National Social Security Fund</p>
@@ -282,8 +302,13 @@ export default function Home() {
 
             {/* Assemble */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg shadow-rose-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-base">ASM</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/services/ASSEMBLE.png"
+                  alt="Assemble"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Assemble</h3>
               <p className="text-xs text-gray-500">Healthcare Coverage</p>
