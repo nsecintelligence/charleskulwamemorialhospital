@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { AlertCircle, Eye, EyeOff, CheckCircle, Stethoscope, Building2, Shield, Loader2 } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff, CheckCircle, Stethoscope, Building2, Shield, Loader2, Clock } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { validatePassword, sanitizeInput, isValidEmail } from '../../lib/security';
+import { analyzeInputSecurity } from '../../lib/securityLogger';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -15,8 +17,17 @@ export default function AdminLogin() {
   const [rememberMe, setRememberMe] = useState(false);
   const [siteName, setSiteName] = useState('');
   const [siteLogo, setSiteLogo] = useState<string | null>(null);
-  const { signIn, signUp } = useAuth();
+  const [touched, setTouched] = useState({ email: false, password: false });
+  const { signIn, signUp, getRateLimitStatus } = useAuth();
   const navigate = useNavigate();
+
+  // Get rate limit status for current email
+  const rateLimitStatus = useMemo(() => {
+    if (email) {
+      return getRateLimitStatus(email);
+    }
+    return { remaining: 5, resetTime: 0 };
+  }, [email, getRateLimitStatus]);
 
   useEffect(() => {
     supabase.from('homepage_content').select('site_name, site_logo_url').maybeSingle().then(({ data }) => {
@@ -25,22 +36,64 @@ export default function AdminLogin() {
     });
   }, []);
 
+  // Validate email field
+  const emailError = useMemo(() => {
+    if (!touched.email || !email) return null;
+    if (!isValidEmail(email)) return 'Please enter a valid email address';
+    return null;
+  }, [email, touched.email]);
+
+  // Validate password field
+  const passwordError = useMemo(() => {
+    if (!touched.password || !password) return null;
+    if (isSignUp) {
+      const result = validatePassword(password);
+      if (!result.valid) return result.errors[0];
+    } else if (password.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
+  }, [password, touched.password, isSignUp]);
+
+  // Form is valid
+  const isFormValid = !emailError && !passwordError && email && password && rateLimitStatus.remaining > 0;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Reset errors
     setError('');
     setSuccess('');
+
+    // Mark fields as touched
+    setTouched({ email: true, password: true });
+
+    // Validate inputs
+    if (!isFormValid) return;
+
+    // Security check on inputs
+    const emailAnalysis = analyzeInputSecurity(email);
+    const passwordAnalysis = analyzeInputSecurity(password);
+
+    if (emailAnalysis.riskLevel === 'high' || passwordAnalysis.riskLevel === 'high') {
+      setError('Invalid input detected. Please check your entries.');
+      return;
+    }
+
     setLoading(true);
+
     try {
       if (isSignUp) {
-        await signUp(email, password);
+        await signUp(sanitizeInput(email), password);
         setIsSignUp(false);
         setSuccess('Account created successfully! Please sign in.');
       } else {
-        await signIn(email, password);
+        await signIn(sanitizeInput(email), password);
         navigate('/admin');
       }
-    } catch (err: any) {
-      setError(err.message || 'Authentication failed');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Authentication failed. Please try again.';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -165,6 +218,27 @@ export default function AdminLogin() {
               </div>
             )}
 
+            {/* Rate Limit Warning */}
+            {rateLimitStatus.remaining <= 2 && rateLimitStatus.remaining > 0 && (
+              <div className="mb-5 p-4 rounded-xl bg-amber-50 border border-amber-100 text-amber-700 text-sm flex items-start gap-3">
+                <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <span>
+                  Warning: {rateLimitStatus.remaining} login attempt{rateLimitStatus.remaining !== 1 ? 's' : ''} remaining.
+                  {' '}Wait {Math.ceil(rateLimitStatus.resetTime / 1000 / 60)} minutes for reset.
+                </span>
+              </div>
+            )}
+
+            {/* Rate Limit Blocked */}
+            {rateLimitStatus.remaining === 0 && (
+              <div className="mb-5 p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <span>
+                  Too many failed attempts. Please wait {Math.ceil(rateLimitStatus.resetTime / 1000 / 60)} minutes before trying again.
+                </span>
+              </div>
+            )}
+
             {/* Success Alert */}
             {success && (
               <div className="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm flex items-start gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -182,9 +256,13 @@ export default function AdminLogin() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => setTouched(t => ({ ...t, email: true }))}
                   placeholder="you@example.com"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                  className={`w-full px-4 py-3 rounded-xl border ${emailError ? 'border-red-300' : 'border-gray-200'} focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-gray-900 placeholder:text-gray-400`}
                 />
+                {emailError && (
+                  <p className="text-red-600 text-xs mt-1">{emailError}</p>
+                )}
               </div>
 
               <div>
@@ -196,8 +274,9 @@ export default function AdminLogin() {
                     minLength={6}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onBlur={() => setTouched(t => ({ ...t, password: true }))}
                     placeholder="Enter your password"
-                    className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+                    className={`w-full px-4 py-3 pr-12 rounded-xl border ${passwordError ? 'border-red-300' : 'border-gray-200'} focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-gray-900 placeholder:text-gray-400`}
                   />
                   <button
                     type="button"
@@ -208,6 +287,9 @@ export default function AdminLogin() {
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
+                {passwordError && (
+                  <p className="text-red-600 text-xs mt-1">{passwordError}</p>
+                )}
               </div>
 
               {/* Remember Me & Forgot Password */}
@@ -229,7 +311,7 @@ export default function AdminLogin() {
               {/* Sign In Button */}
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !isFormValid}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white py-3 px-4 rounded-xl font-semibold text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 disabled:shadow-none"
               >
                 {loading ? (

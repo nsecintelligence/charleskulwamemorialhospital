@@ -24,6 +24,7 @@ import AdminHeroSlides from './pages/admin/HeroSlides';
 import AdminForms from './pages/admin/Forms';
 import AdminPrices from './pages/admin/Prices';
 import AdminAppointments from './pages/admin/Appointments';
+import AdminSecurityLogs from './pages/admin/SecurityLogs';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="forms" element={<AdminForms />} />
           <Route path="prices" element={<AdminPrices />} />
           <Route path="appointments" element={<AdminAppointments />} />
+          <Route path="security" element={<AdminSecurityLogs />} />
         </Route>
       </Routes>
     </BrowserRouter>
