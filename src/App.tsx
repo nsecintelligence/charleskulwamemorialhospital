@@ -9,6 +9,7 @@ import News from './pages/News';
 import NewsDetail from './pages/NewsDetail';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
+import Clinic from './pages/Clinic';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminServices from './pages/admin/Services';
@@ -25,6 +26,7 @@ import AdminForms from './pages/admin/Forms';
 import AdminPrices from './pages/admin/Prices';
 import AdminAppointments from './pages/admin/Appointments';
 import AdminSecurityLogs from './pages/admin/SecurityLogs';
+import AdminSpecialistDoctors from './pages/admin/SpecialistDoctors';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
@@ -42,6 +44,7 @@ function App() {
           <Route path="news/:id" element={<NewsDetail />} />
           <Route path="faq" element={<FAQ />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="clinic" element={<Clinic />} />
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
@@ -60,6 +63,7 @@ function App() {
           <Route path="prices" element={<AdminPrices />} />
           <Route path="appointments" element={<AdminAppointments />} />
           <Route path="security" element={<AdminSecurityLogs />} />
+          <Route path="specialist-doctors" element={<AdminSpecialistDoctors />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -18,6 +18,7 @@ import {
   FileText,
   Calendar,
   Shield,
+  Users,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
@@ -29,6 +30,7 @@ const adminLinks = [
   { path: '/admin/top-bar', label: 'Top Bar', icon: PanelTop },
   { path: '/admin/services', label: 'Services', icon: Stethoscope },
   { path: '/admin/departments', label: 'Departments', icon: Building2 },
+  { path: '/admin/specialist-doctors', label: 'Specialist Doctors', icon: Users },
   { path: '/admin/about', label: 'About Us', icon: Info },
   { path: '/admin/gallery', label: 'Gallery', icon: Image },
   { path: '/admin/news', label: 'News', icon: Newspaper },

@@ -243,7 +243,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Insurance Services</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">We work with major insurance providers to ensure accessible and affordable healthcare for all our patients.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {/* NHIF */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
               <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -312,6 +312,15 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Assemble</h3>
               <p className="text-xs text-gray-500">Healthcare Coverage</p>
+            </div>
+
+            {/* Britam */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
+              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform">
+                <span className="text-white font-bold text-lg">BRITAM</span>
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-1">Britam</h3>
+              <p className="text-xs text-gray-500">British American Insurance</p>
             </div>
           </div>
 

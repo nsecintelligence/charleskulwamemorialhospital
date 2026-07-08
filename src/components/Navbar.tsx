@@ -8,6 +8,7 @@ const navLinks = [
   { path: '/', label: 'Home' },
   { path: '/about', label: 'About Us' },
   { path: '/services', label: 'Services' },
+  { path: '/clinic', label: 'Clinic' },
   { path: '/departments', label: 'Departments' },
   { path: '/gallery', label: 'Gallery' },
   { path: '/news', label: 'News' },
