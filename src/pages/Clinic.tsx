@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Calendar, User, Clock, Phone, Mail, MapPin, Stethoscope, Award, ChevronRight } from 'lucide-react';
+import { Calendar, User, Clock, Phone, Mail, MapPin, Stethoscope, Award, ChevronRight, ImageIcon, Download, ZoomIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface DoctorSchedule {
@@ -57,6 +57,10 @@ export default function Clinic() {
   const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
+  const [showImageModal, setShowImageModal] = useState(false);
+
+  // Timetable image path
+  const timetableImage = '/images/timetable/IMG-20260707-WA0018.jpg';
 
   useEffect(() => {
     fetchDoctors();
@@ -142,8 +146,82 @@ export default function Clinic() {
         </div>
       </section>
 
+      {/* Timetable Image Section */}
+      <section className="container-width section-padding bg-white">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+            <ImageIcon className="w-4 h-4" />
+            Doctor Timetable
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Specialist Doctors Schedule</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            View the weekly timetable for our specialist doctors (Madaktari Bingwa). Click on the image to enlarge.
+          </p>
+        </div>
+
+        {/* Timetable Image Card */}
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="relative bg-gray-50 rounded-2xl border-2 border-emerald-100 overflow-hidden shadow-lg cursor-pointer group"
+            onClick={() => setShowImageModal(true)}
+          >
+            <img
+              src={timetableImage}
+              alt="Specialist Doctors Timetable"
+              className="w-full h-auto object-contain"
+              loading="lazy"
+            />
+
+            {/* Overlay on hover */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg">
+                <ZoomIn className="w-5 h-5 text-emerald-600" />
+                <span className="text-emerald-700 font-medium">Click to Enlarge</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Download Button */}
+          <div className="flex justify-center mt-6">
+            <a
+              href={timetableImage}
+              download="CKM-Specialist-Doctors-Timetable.jpg"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/25"
+            >
+              <Download className="w-5 h-5" />
+              Download Timetable
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Image Modal */}
+      {showImageModal && (
+        <div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowImageModal(false)}
+        >
+          <div className="relative max-w-6xl w-full max-h-[90vh] overflow-auto">
+            <button
+              onClick={() => setShowImageModal(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <img
+              src={timetableImage}
+              alt="Specialist Doctors Timetable"
+              className="w-full h-auto object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Filter Section */}
-      <section id="timetable" className="bg-white border-b border-gray-200 sticky top-16 z-30">
+      <section className="bg-white border-b border-gray-200 sticky top-16 z-30">
         <div className="container-width py-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             {/* Day Filter */}
