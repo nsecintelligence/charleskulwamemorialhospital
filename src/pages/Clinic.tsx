@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 interface DoctorSchedule {
   id: string;
-  day_of_week: number;
+  day_of_week: number | null;
+  specific_date: string | null;
   start_time: string;
   end_time: string;
   room_number: string | null;
@@ -24,15 +25,12 @@ interface Doctor {
   doctor_schedules: DoctorSchedule[];
 }
 
-const DAYS_OF_WEEK = [
-  { key: 0, label: 'Jumapili', swahili: 'Jumapili', short: 'Jp' },
-  { key: 1, label: 'Jumatatu', swahili: 'Jumatatu', short: 'Jt' },
-  { key: 2, label: 'Jumanne', swahili: 'Jumanne', short: 'Jn' },
-  { key: 3, label: 'Jumatano', swahili: 'Jumatano', short: 'Jtno' },
-  { key: 4, label: 'Alhamisi', swahili: 'Alhamisi', short: 'Alh' },
-  { key: 5, label: 'Ijumaa', swahili: 'Ijumaa', short: 'Ij' },
-  { key: 6, label: 'Jumamosi', swahili: 'Jumamosi', short: 'Jms' },
-];
+const SWAHILI_DAYS = ['Jumapili', 'Jumatatu', 'Jumanne', 'Jumatano', 'Alhamisi', 'Ijumaa', 'Jumamosi'];
+const SWAHILI_MONTHS = ['Januari', 'Februari', 'Machi', 'Aprili', 'Mei', 'Juni', 'Julai', 'Agosti', 'Septemba', 'Oktoba', 'Novemba', 'Desemba'];
+
+function toDateString(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
 
 function formatTime(time: string): string {
   const [hours, minutes] = time.split(':');
@@ -42,39 +40,69 @@ function formatTime(time: string): string {
   return `${displayHour}:${minutes} ${ampm}`;
 }
 
-function getSpecialtyIcon(specialty: string): string {
-  const icons: Record<string, string> = {
-    'Gynaecologist': '🩺',
-    'Physician': '❤️',
-    'ENT Surgeon': '👂',
-    'Ophthalmologist': '👁️',
-    'Paediatrician': '👶',
-    'Orthopedic Surgeon': '🦴',
-    'Dermatologist': '🧴',
-    'Physiotherapist': '💪',
-  };
-  return icons[specialty] || '🏥';
+const SPECIALTY_COLORS: Record<string, string> = {
+  Gynaecologist: 'from-pink-500 to-rose-600',
+  Physician: 'from-red-500 to-red-700',
+  'ENT Surgeon': 'from-blue-500 to-blue-700',
+  Ophthalmologist: 'from-cyan-500 to-cyan-700',
+  Paediatrician: 'from-yellow-500 to-amber-600',
+  'Orthopedic Surgeon': 'from-slate-500 to-slate-700',
+  Dermatologist: 'from-orange-500 to-orange-700',
+  Physiotherapist: 'from-green-500 to-green-700',
+};
+
+const SPECIALTY_ICONS: Record<string, string> = {
+  Gynaecologist: '🩺',
+  Physician: '❤️',
+  'ENT Surgeon': '👂',
+  Ophthalmologist: '👁️',
+  Paediatrician: '👶',
+  'Orthopedic Surgeon': '🦴',
+  Dermatologist: '🧴',
+  Physiotherapist: '💪',
+};
+
+// Determine which schedules apply for a given date
+function getSchedulesForDate(doctor: Doctor, dateStr: string): DoctorSchedule[] {
+  const date = new Date(dateStr + 'T00:00:00');
+  const dow = date.getDay();
+  return doctor.doctor_schedules.filter(s => {
+    if (!s.is_available) return false;
+    if (s.specific_date) return s.specific_date === dateStr;
+    return s.day_of_week === dow;
+  });
 }
 
-const SPECIALTY_COLORS: Record<string, string> = {
-  'Gynaecologist': 'from-pink-500 to-rose-600',
-  'Physician': 'from-red-500 to-red-700',
-  'ENT Surgeon': 'from-blue-500 to-blue-700',
-  'Ophthalmologist': 'from-cyan-500 to-cyan-700',
-  'Paediatrician': 'from-yellow-500 to-amber-600',
-  'Orthopedic Surgeon': 'from-gray-500 to-gray-700',
-  'Dermatologist': 'from-orange-500 to-orange-700',
-  'Physiotherapist': 'from-green-500 to-green-700',
-};
+function doctorAvailableOnDate(doctor: Doctor, dateStr: string): boolean {
+  return getSchedulesForDate(doctor, dateStr).length > 0;
+}
+
+// Build the list of dates for July 2026 (the month shown on the timetable)
+function buildJulyDates(): string[] {
+  const dates: string[] = [];
+  for (let d = 1; d <= 31; d++) {
+    const date = new Date(2026, 6, d); // month is 0-indexed
+    dates.push(toDateString(date));
+  }
+  return dates;
+}
 
 export default function Clinic() {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDay, setSelectedDay] = useState<number>(new Date().getDay());
+  const [selectedDate, setSelectedDate] = useState<string>(toDateString(new Date()));
   const [showImageModal, setShowImageModal] = useState(false);
 
   const timetableImage = '/images/timetable/IMG-20260707-WA0018.jpg';
-  const today = new Date().getDay();
+  const todayStr = toDateString(new Date());
+  const allDates = buildJulyDates();
+
+  // If today is not in July 2026, default to first date of timetable month
+  useEffect(() => {
+    if (!allDates.includes(todayStr)) {
+      setSelectedDate('2026-07-09');
+    }
+  }, []);
 
   useEffect(() => {
     fetchDoctors();
@@ -86,7 +114,7 @@ export default function Clinic() {
         .from('specialist_doctors')
         .select(`
           id, name, specialty, qualification, photo_url, phone, email,
-          doctor_schedules ( id, day_of_week, start_time, end_time, room_number, notes, is_available )
+          doctor_schedules ( id, day_of_week, specific_date, start_time, end_time, room_number, notes, is_available )
         `)
         .eq('is_active', true)
         .order('display_order', { ascending: true });
@@ -100,21 +128,25 @@ export default function Clinic() {
     }
   }
 
-  // Count available doctors per day
-  function countForDay(day: number): number {
-    return doctors.filter(d => d.doctor_schedules.some(s => s.day_of_week === day && s.is_available)).length;
+  // Count available doctors per date
+  function countForDate(dateStr: string): number {
+    return doctors.filter(d => doctorAvailableOnDate(d, dateStr)).length;
   }
 
-  // Doctors available on selected day
-  const filteredDoctors = doctors.filter(d =>
-    d.doctor_schedules.some(s => s.day_of_week === selectedDay && s.is_available)
-  );
-
-  function getScheduleForDay(doctor: Doctor, day: number): DoctorSchedule | undefined {
-    return doctor.doctor_schedules.find(s => s.day_of_week === day && s.is_available);
+  // Has special (non-recurring / specific_date) doctors on that date
+  function hasSpecialClinic(dateStr: string): boolean {
+    return doctors.some(d => d.doctor_schedules.some(s => s.is_available && s.specific_date === dateStr));
   }
 
-  const selectedDayName = DAYS_OF_WEEK.find(d => d.key === selectedDay)?.label || '';
+  const filteredDoctors = doctors.filter(d => doctorAvailableOnDate(d, selectedDate));
+
+  const selDateObj = new Date(selectedDate + 'T00:00:00');
+  const selDayName = SWAHILI_DAYS[selDateObj.getDay()];
+  const selMonthName = SWAHILI_MONTHS[selDateObj.getMonth()];
+  const selDateLabel = `${selDateObj.getDate()} ${selMonthName} ${selDateObj.getFullYear()} — ${selDayName}`;
+
+  // Navigate months (we only have July 2026 for now)
+  const visibleMonth = 'Julai 2026';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -154,9 +186,7 @@ export default function Clinic() {
         <div className="container-width section-padding">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Ratiba ya Clinic za Madaktari Bingwa</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Bonyeza picha kukuza ili uione vizuri zaidi.
-            </p>
+            <p className="text-gray-600 max-w-2xl mx-auto">Bonyeza picha kukuza ili uione vizuri zaidi.</p>
           </div>
           <div className="max-w-4xl mx-auto">
             <div
@@ -215,71 +245,108 @@ export default function Clinic() {
         </div>
       )}
 
-      {/* Day Filter + Doctor List */}
+      {/* Date Filter + Doctor List */}
       <section id="ratiba" className="bg-gray-50">
         <div className="container-width section-padding">
           <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Madaktari Wanaopatikana Leo na Kila Siku</h2>
-            <p className="text-gray-600">Chagua siku hapa chini kuona madaktari wanaopatikana</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Madaktari Wanaopatikana kwa Tarehe</h2>
+            <p className="text-gray-600">Chagua tarehe hapa chini kuona madaktari wanaopatikana siku hiyo</p>
           </div>
 
-          {/* Day Selector */}
+          {/* Calendar Strip */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-8">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-5 h-5 text-emerald-600" />
-              <span className="text-sm font-semibold text-gray-700">Chagua Siku:</span>
+            {/* Month header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-emerald-600" />
+                <span className="font-bold text-gray-800 text-lg">{visibleMonth}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block" /> Kliniki Maalum
+                </span>
+                <span className="inline-flex items-center gap-1.5 ml-2">
+                  <span className="w-3 h-3 rounded-full bg-blue-400 inline-block" /> Leo
+                </span>
+              </div>
             </div>
-            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-              {DAYS_OF_WEEK.map((day) => {
-                const count = loading ? null : countForDay(day.key);
-                const isToday = day.key === today;
-                const isSelected = day.key === selectedDay;
 
-                return (
-                  <button
-                    key={day.key}
-                    onClick={() => setSelectedDay(day.key)}
-                    className={`relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-200 border-2 ${
-                      isSelected
-                        ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-600/25 scale-105'
-                        : isToday
-                        ? 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100'
-                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100 hover:border-gray-300'
-                    }`}
-                  >
-                    {isToday && !isSelected && (
-                      <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 text-xs bg-emerald-600 text-white px-1.5 py-0.5 rounded-full leading-none">Leo</span>
-                    )}
-                    <span className="text-xs font-bold">{day.short}</span>
-                    <span className="text-xs mt-0.5 font-medium">{day.swahili.substring(0, 5)}</span>
-                    {count !== null && (
-                      <span className={`mt-1 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center ${
-                        isSelected ? 'bg-white/20 text-white' : count > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-200 text-gray-500'
-                      }`}>
-                        {count}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
+            {/* Day-of-week headers */}
+            <div className="grid grid-cols-7 gap-1 mb-1">
+              {['Jp', 'Jt', 'Jn', 'Jtno', 'Alh', 'Ij', 'Jms'].map((d) => (
+                <div key={d} className="text-center text-xs font-semibold text-gray-400 py-1">{d}</div>
+              ))}
             </div>
+
+            {/* Calendar grid */}
+            {(() => {
+              const firstDay = new Date(2026, 6, 1).getDay(); // Wednesday = 3
+              const cells: (string | null)[] = Array(firstDay).fill(null).concat(allDates);
+              // pad to fill last row
+              while (cells.length % 7 !== 0) cells.push(null);
+              const weeks: (string | null)[][] = [];
+              for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+
+              return (
+                <div className="space-y-1">
+                  {weeks.map((week, wi) => (
+                    <div key={wi} className="grid grid-cols-7 gap-1">
+                      {week.map((dateStr, di) => {
+                        if (!dateStr) return <div key={di} />;
+                        const count = loading ? null : countForDate(dateStr);
+                        const isToday = dateStr === todayStr;
+                        const isSelected = dateStr === selectedDate;
+                        const isSpecial = !loading && hasSpecialClinic(dateStr);
+                        const dayNum = new Date(dateStr + 'T00:00:00').getDate();
+
+                        return (
+                          <button
+                            key={dateStr}
+                            onClick={() => setSelectedDate(dateStr)}
+                            className={`relative flex flex-col items-center justify-center py-2 rounded-xl transition-all duration-150 border-2 text-center ${
+                              isSelected
+                                ? 'bg-emerald-600 border-emerald-600 text-white shadow-md scale-105'
+                                : isToday
+                                ? 'bg-blue-50 border-blue-300 text-blue-800 hover:bg-blue-100'
+                                : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-emerald-50 hover:border-emerald-200'
+                            }`}
+                          >
+                            {/* Special clinic dot */}
+                            {isSpecial && !isSelected && (
+                              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500" />
+                            )}
+                            <span className="text-sm font-bold leading-none">{dayNum}</span>
+                            {count !== null && count > 0 && (
+                              <span className={`text-xs mt-1 font-semibold ${isSelected ? 'text-white/80' : 'text-emerald-600'}`}>
+                                +{count}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+
+            {/* Legend note */}
+            <p className="text-xs text-gray-400 mt-4 text-center">
+              Nambari (+) inaonyesha idadi ya madaktari wanaopatikana siku hiyo. Nukta ya kijani inaonyesha kliniki maalum.
+            </p>
           </div>
 
-          {/* Result header */}
+          {/* Selected date header */}
           {!loading && (
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-2 text-gray-700">
                 <Users className="w-5 h-5 text-emerald-600" />
                 <span className="font-semibold text-lg">
-                  {selectedDay === today ? (
-                    <>Madaktari wa Leo — <span className="text-emerald-600">{selectedDayName}</span></>
-                  ) : (
-                    <>Madaktari wa <span className="text-emerald-600">{selectedDayName}</span></>
-                  )}
+                  Madaktari wa <span className="text-emerald-600">{selDateLabel}</span>
                 </span>
               </div>
               <span className="ml-auto bg-emerald-100 text-emerald-700 text-sm font-semibold px-3 py-1 rounded-full">
-                {filteredDoctors.length} daktari{filteredDoctors.length !== 1 ? '' : ''}
+                {filteredDoctors.length} daktari
               </span>
             </div>
           )}
@@ -291,12 +358,12 @@ export default function Clinic() {
             </div>
           )}
 
-          {/* Empty for day */}
+          {/* Empty for date */}
           {!loading && filteredDoctors.length === 0 && (
             <div className="text-center py-12 bg-white rounded-2xl border border-gray-100">
               <Stethoscope className="w-14 h-14 text-gray-300 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-gray-700 mb-1">Hakuna Daktari Bingwa {selectedDayName}</h3>
-              <p className="text-gray-500 text-sm">Jaribu siku nyingine au angalia ratiba iliyo juu.</p>
+              <h3 className="text-lg font-semibold text-gray-700 mb-1">Hakuna Daktari Bingwa tarehe hii</h3>
+              <p className="text-gray-500 text-sm">Jaribu tarehe nyingine au angalia ratiba iliyo juu.</p>
             </div>
           )}
 
@@ -304,9 +371,11 @@ export default function Clinic() {
           {!loading && filteredDoctors.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDoctors.map((doctor) => {
-                const schedule = getScheduleForDay(doctor, selectedDay)!;
+                const schedules = getSchedulesForDate(doctor, selectedDate);
+                const schedule = schedules[0];
+                const isSpecific = schedule?.specific_date != null;
                 const gradientColor = SPECIALTY_COLORS[doctor.specialty] || 'from-emerald-500 to-emerald-700';
-                const isToday = selectedDay === today;
+                const isToday = selectedDate === todayStr;
 
                 return (
                   <div
@@ -315,9 +384,7 @@ export default function Clinic() {
                       isToday ? 'border-emerald-200 ring-1 ring-emerald-200' : 'border-gray-100'
                     }`}
                   >
-                    {/* Color top bar */}
                     <div className={`h-1.5 bg-gradient-to-r ${gradientColor}`} />
-
                     <div className="p-6">
                       {/* Header */}
                       <div className="flex items-start gap-4 mb-4">
@@ -329,7 +396,7 @@ export default function Clinic() {
                           />
                         ) : (
                           <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${gradientColor} flex items-center justify-center text-white text-2xl flex-shrink-0`}>
-                            {getSpecialtyIcon(doctor.specialty)}
+                            {SPECIALTY_ICONS[doctor.specialty] || '🏥'}
                           </div>
                         )}
                         <div className="flex-1 min-w-0">
@@ -344,29 +411,34 @@ export default function Clinic() {
                         </div>
                       </div>
 
-                      {/* Schedule for selected day */}
-                      <div className={`rounded-xl p-4 border ${isToday ? 'bg-emerald-50 border-emerald-200' : 'bg-gray-50 border-gray-200'}`}>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Calendar className="w-4 h-4 text-emerald-600" />
-                          <span className="text-sm font-semibold text-gray-700">{selectedDayName}</span>
-                          {isToday && <span className="text-xs bg-emerald-600 text-white px-2 py-0.5 rounded-full">Leo</span>}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span className="text-base font-bold text-gray-900">
-                            {formatTime(schedule.start_time)} – {formatTime(schedule.end_time)}
-                          </span>
-                        </div>
-                        {schedule.room_number && (
-                          <div className="flex items-center gap-2 mt-1">
-                            <MapPin className="w-4 h-4 text-gray-400" />
-                            <span className="text-sm text-gray-600">Chumba {schedule.room_number}</span>
+                      {/* Schedule for selected date */}
+                      {schedule && (
+                        <div className={`rounded-xl p-4 border ${isToday ? 'bg-emerald-50 border-emerald-200' : 'bg-gray-50 border-gray-200'}`}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <Calendar className="w-4 h-4 text-emerald-600" />
+                            <span className="text-sm font-semibold text-gray-700">{selDayName}, {selDateLabel.split('—')[0].trim()}</span>
+                            {isToday && <span className="text-xs bg-emerald-600 text-white px-2 py-0.5 rounded-full">Leo</span>}
+                            {isSpecific && (
+                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full ml-auto">Kliniki Maalum</span>
+                            )}
                           </div>
-                        )}
-                        {schedule.notes && (
-                          <p className="text-xs text-gray-500 mt-2 italic">{schedule.notes}</p>
-                        )}
-                      </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-gray-400" />
+                            <span className="text-base font-bold text-gray-900">
+                              {formatTime(schedule.start_time)} – {formatTime(schedule.end_time)}
+                            </span>
+                          </div>
+                          {schedule.room_number && (
+                            <div className="flex items-center gap-2 mt-1">
+                              <MapPin className="w-4 h-4 text-gray-400" />
+                              <span className="text-sm text-gray-600">Chumba {schedule.room_number}</span>
+                            </div>
+                          )}
+                          {schedule.notes && (
+                            <p className="text-xs text-gray-500 mt-2 italic">{schedule.notes}</p>
+                          )}
+                        </div>
+                      )}
 
                       {/* Contact */}
                       {(doctor.phone || doctor.email) && (
@@ -399,9 +471,7 @@ export default function Clinic() {
         <div className="container-width section-padding">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Jinsi ya Kupata Miadi</h2>
-            <p className="text-gray-600 mb-8">
-              Piga simu au fika hospitali kupata miadi na daktari bingwa wetu.
-            </p>
+            <p className="text-gray-600 mb-8">Piga simu au fika hospitali kupata miadi na daktari bingwa wetu.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white rounded-xl p-6 shadow-sm">
                 <Phone className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
