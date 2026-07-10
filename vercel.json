@@ -2,13 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.schema.json",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://lmuurgptiyfddblheofj.supabase.co wss://lmuurgptiyfddblheofj.supabase.co; media-src 'self' data: https:; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
         },
         {
           "key": "Strict-Transport-Security",
@@ -28,7 +29,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+          "value": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
         },
         {
           "key": "X-DNS-Prefetch-Control",
@@ -59,6 +60,7 @@
       ]
     }
   ],
+
   "rewrites": [
     {
       "source": "/.env",
@@ -134,10 +136,6 @@
     },
     {
       "source": "/console(.*)",
-      "destination": "/blocked.html"
-    },
-    {
-      "source": "/.well-known/(.*)",
       "destination": "/blocked.html"
     }
   ]
