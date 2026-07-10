@@ -137,6 +137,11 @@
     {
       "source": "/console(.*)",
       "destination": "/blocked.html"
+    },
+
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
