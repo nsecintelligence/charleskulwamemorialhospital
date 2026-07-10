@@ -59,126 +59,86 @@
       ]
     }
   ],
-  "redirects": [
+  "rewrites": [
     {
       "source": "/.env",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.env(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.git/(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.aws/(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/phpmyadmin(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/wp-admin(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/wp-content(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/wp-login(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/config(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/backup(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/vendor/(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.htaccess",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.svn/(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/server-status",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/debug(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/actuator(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/adminer(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/manager(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/console(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     },
     {
       "source": "/.well-known/(.*)",
-      "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "destination": "/blocked.html"
     }
   ]
 }
