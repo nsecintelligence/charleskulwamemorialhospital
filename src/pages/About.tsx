@@ -111,7 +111,7 @@ export default function About() {
             <h2 className="text-3xl font-bold text-gray-900">Leadership</h2>
           </div>
           <div className="bg-white rounded-xl p-8 shadow-sm">
-            <p className="text-gray-600 leading-relaxed whitespace-pre-line">{about?.management || 'Our hospital is led by experienced medical professionals.'}</p>
+            <p className="text-gray-600 leading-relaxed whitespace-pre-line">{about?.management || 'Charles Kulwa Memorial hospital is led by experienced medical professionals.'}</p>
           </div>
         </div>
       </section>
