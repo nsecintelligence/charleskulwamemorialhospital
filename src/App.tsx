@@ -26,6 +26,7 @@ import AdminForms from './pages/admin/Forms';
 import AdminPrices from './pages/admin/Prices';
 import AdminAppointments from './pages/admin/Appointments';
 import AdminSecurityLogs from './pages/admin/SecurityLogs';
+import AdminSocPanel from './pages/admin/SocPanel';
 import AdminSpecialistDoctors from './pages/admin/SpecialistDoctors';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
@@ -63,6 +64,7 @@ function App() {
           <Route path="prices" element={<AdminPrices />} />
           <Route path="appointments" element={<AdminAppointments />} />
           <Route path="security" element={<AdminSecurityLogs />} />
+          <Route path="soc" element={<AdminSocPanel />} />
           <Route path="specialist-doctors" element={<AdminSpecialistDoctors />} />
         </Route>
       </Routes>

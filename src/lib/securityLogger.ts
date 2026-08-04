@@ -1,5 +1,7 @@
 /**
- * Security logging utilities for tracking suspicious activity
+ * Security logging utilities for tracking suspicious activity.
+ * Events are persisted to the soc_events table via the security-ingest
+ * edge function, so they are visible in the SOC monitoring panel.
  */
 
 export type SecurityEventType =
@@ -30,12 +32,14 @@ interface SecurityLogEntry {
   severity: 'low' | 'medium' | 'high' | 'critical';
 }
 
-// In-memory log for client-side (limited to last 100 entries)
-const securityLogs: SecurityLogEntry[] = [];
 const MAX_LOG_ENTRIES = 100;
+const securityLogs: SecurityLogEntry[] = [];
+
+const INGEST_ENDPOINT = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/security-ingest`;
 
 /**
- * Log a security event
+ * Log a security event — persists to the SOC database and keeps an
+ * in-memory copy for immediate client-side access.
  */
 export function logSecurityEvent(
   type: SecurityEventType,
@@ -51,48 +55,68 @@ export function logSecurityEvent(
     severity,
   };
 
-  // Add to in-memory log
   securityLogs.unshift(entry);
   if (securityLogs.length > MAX_LOG_ENTRIES) {
     securityLogs.pop();
   }
 
-  // Log to console in development
   if (import.meta.env.DEV) {
     console.warn(`[Security] ${type}:`, details);
   }
 
-  // In production, send to logging endpoint (if implemented)
-  if (import.meta.env.PROD && (severity === 'high' || severity === 'critical')) {
-    // Could send to Supabase edge function for server-side logging
-    sendToLoggingEndpoint(entry);
-  }
+  sendToIngestEndpoint(type, severity, details);
 }
 
 /**
- * Send high-severity events to a logging endpoint
+ * Send security event to the edge function for database persistence.
+ * Fires-and-forgets so it never blocks user interaction.
  */
-async function sendToLoggingEndpoint(entry: SecurityLogEntry): Promise<void> {
+async function sendToIngestEndpoint(
+  type: SecurityEventType,
+  severity: string,
+  details: Record<string, unknown>
+): Promise<void> {
   try {
-    // This would ideally go to a Supabase edge function or similar
-    // For now, we just log to console in development
-    if (!import.meta.env.PROD) {
-      console.error('[Security Alert]', entry);
+    const body: Record<string, unknown> = {
+      event_type: type,
+      severity,
+      user_agent: navigator.userAgent,
+      path: window.location.pathname,
+      metadata: details,
+    };
+
+    if (typeof details.attack_vector === 'string') {
+      body.attack_vector = details.attack_vector;
     }
+    if (typeof details.payload === 'string') {
+      body.payload_snippet = details.payload;
+    }
+    if (typeof details.method === 'string') {
+      body.method = details.method;
+    }
+
+    await fetch(INGEST_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify(body),
+    });
   } catch {
-    // Silently fail to avoid leaking information
+    // Silently fail — logging must never break the app
   }
 }
 
 /**
- * Get recent security logs (for admin monitoring)
+ * Get recent security logs (client-side in-memory copy)
  */
 export function getSecurityLogs(limit: number = 50): SecurityLogEntry[] {
   return securityLogs.slice(0, limit);
 }
 
 /**
- * Clear security logs
+ * Clear in-memory security logs
  */
 export function clearSecurityLogs(): void {
   securityLogs.length = 0;
@@ -148,7 +172,7 @@ export function logSuspiciousRequest(reason: string, details: Record<string, unk
 export function logSQLInjectionAttempt(input: string): void {
   logSecurityEvent(
     'SQL_INJECTION_ATTEMPT',
-    { input: maskSensitive(input) },
+    { input: maskSensitive(input), attack_vector: 'SQL_INJECTION', payload: input },
     'critical'
   );
 }
@@ -159,7 +183,7 @@ export function logSQLInjectionAttempt(input: string): void {
 export function logXSSAttempt(input: string): void {
   logSecurityEvent(
     'XSS_ATTEMPT',
-    { input: maskSensitive(input) },
+    { input: maskSensitive(input), attack_vector: 'XSS', payload: input },
     'critical'
   );
 }
@@ -235,8 +259,6 @@ export function detectSuspiciousUserAgent(): void {
  */
 function maskSensitive(value: string): string {
   if (value.length <= 4) return '****';
-
-  // Show first 2 and last 2 characters
   return value.substring(0, 2) + '****' + value.substring(value.length - 2);
 }
 
@@ -282,7 +304,6 @@ export function analyzeInputSecurity(input: string): {
   if (risks >= 2) riskLevel = 'high';
   else if (risks === 1) riskLevel = 'medium';
 
-  // Log if high risk
   if (hasSQLInjection) {
     logSQLInjectionAttempt(input);
   }
@@ -290,7 +311,7 @@ export function analyzeInputSecurity(input: string): {
     logXSSAttempt(input);
   }
   if (hasPathTraversal) {
-    logSecurityEvent('PATH_TRAVERSAL_ATTEMPT', { input: maskSensitive(input) }, 'high');
+    logSecurityEvent('PATH_TRAVERSAL_ATTEMPT', { input: maskSensitive(input), attack_vector: 'PATH_TRAVERSAL', payload: input }, 'high');
   }
 
   return { hasSQLInjection, hasXSS, hasPathTraversal, riskLevel };

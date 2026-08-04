@@ -18,6 +18,7 @@ import {
   FileText,
   Calendar,
   Shield,
+  Radar,
   Users,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -39,7 +40,8 @@ const adminLinks = [
   { path: '/admin/prices', label: 'Prices', icon: DollarSign },
   { path: '/admin/forms', label: 'Forms', icon: FileText },
   { path: '/admin/appointments', label: 'Appointments', icon: Calendar },
-  { path: '/admin/security', label: 'Security', icon: Shield },
+  { path: '/admin/security', label: 'Security Logs', icon: Shield },
+  { path: '/admin/soc', label: 'SOC Monitor', icon: Radar },
 ];
 
 export default function AdminLayout() {
