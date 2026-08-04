@@ -48,8 +48,85 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-hospital-red border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen bg-white animate-pulse">
+        {/* Skeleton Navbar */}
+        <div className="h-16 bg-gray-100 border-b border-gray-200" />
+
+        {/* Skeleton Hero */}
+        <div className="relative h-[400px] sm:h-[500px] md:h-[580px] bg-gray-200">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-300/80 to-gray-200/20" />
+          <div className="relative container-width h-full flex items-center px-4">
+            <div className="max-w-2xl space-y-4">
+              <div className="h-3 w-32 bg-gray-300 rounded-full" />
+              <div className="h-10 w-3/4 bg-gray-300 rounded-lg" />
+              <div className="h-10 w-1/2 bg-gray-300 rounded-lg" />
+              <div className="h-4 w-full bg-gray-300 rounded-full" />
+              <div className="h-4 w-4/5 bg-gray-300 rounded-full" />
+              <div className="flex gap-3 pt-2">
+                <div className="h-11 w-40 bg-gray-300 rounded-lg" />
+                <div className="h-11 w-32 bg-gray-300 rounded-lg" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton Stats */}
+        <div className="bg-white py-12 border-b">
+          <div className="container-width">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="text-center space-y-2">
+                  <div className="w-8 h-8 bg-gray-200 rounded-full mx-auto" />
+                  <div className="h-7 w-16 bg-gray-200 rounded mx-auto" />
+                  <div className="h-3 w-24 bg-gray-200 rounded-full mx-auto" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton Services */}
+        <div className="section-padding bg-gray-50">
+          <div className="container-width">
+            <div className="text-center mb-12 space-y-3">
+              <div className="h-8 w-48 bg-gray-200 rounded-lg mx-auto" />
+              <div className="h-4 w-96 bg-gray-200 rounded-full mx-auto" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-white rounded-xl shadow-sm overflow-hidden">
+                  <div className="h-48 bg-gray-200" />
+                  <div className="p-5 space-y-2">
+                    <div className="h-5 w-3/4 bg-gray-200 rounded" />
+                    <div className="h-3 w-full bg-gray-200 rounded-full" />
+                    <div className="h-3 w-4/5 bg-gray-200 rounded-full" />
+                    <div className="h-3 w-16 bg-gray-200 rounded-full mt-3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Skeleton Insurance */}
+        <div className="section-padding bg-gradient-to-br from-emerald-50 to-green-50">
+          <div className="container-width">
+            <div className="text-center mb-12 space-y-3">
+              <div className="h-6 w-40 bg-gray-200 rounded-full mx-auto" />
+              <div className="h-8 w-56 bg-gray-200 rounded-lg mx-auto" />
+              <div className="h-4 w-80 bg-gray-200 rounded-full mx-auto" />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center space-y-3">
+                  <div className="w-20 h-20 bg-gray-200 rounded-xl mx-auto" />
+                  <div className="h-4 w-16 bg-gray-200 rounded mx-auto" />
+                  <div className="h-3 w-20 bg-gray-200 rounded-full mx-auto" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -316,11 +393,16 @@ export default function Home() {
 
             {/* Britam */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
-              <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-lg shadow-red-500/20 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-lg">BRITAM</span>
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center group-hover:scale-105 transition-transform">
+                <img
+                  src="/images/insurance/BRITAM.jpg"
+                  alt="BRITAM INSURANCE TANZANIA"
+                  className="w-full h-full object-contain rounded-lg"
+                  loading="lazy"
+                />
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Britam</h3>
-              <p className="text-xs text-gray-500">British American Insurance</p>
+              <h3 className="font-semibold text-gray-900 mb-1">BRITAM</h3>
+              <p className="text-xs text-gray-500">BRITAM INSURANCE TANZANIA</p>
             </div>
           </div>
 
