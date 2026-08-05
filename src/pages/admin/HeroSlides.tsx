@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { HeroSlide } from '../../types';
-import { Save, Plus, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { Save, X, ChevronUp, ChevronDown } from 'lucide-react';
 import ImageUpload from '../../components/ImageUpload';
 
 export default function AdminHeroSlides() {

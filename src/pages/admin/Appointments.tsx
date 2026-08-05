@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { Appointment } from '../../types';
-import { X, Check, Clock, Phone, Mail, Calendar, User, RefreshCw } from 'lucide-react';
+import { X, Check, Phone, Mail, Calendar, User, RefreshCw } from 'lucide-react';
 
 export default function AdminAppointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);

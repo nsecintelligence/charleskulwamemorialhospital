@@ -15,11 +15,9 @@ import {
   Ban,
   CheckCircle,
   Clock,
-  MapPin,
   Server,
   Zap,
   Lock,
-  Wifi,
 } from 'lucide-react';
 
 interface SocEvent {
@@ -389,9 +387,9 @@ export default function SocPanel() {
                     topIps.map(([ip, count]) => {
                       const ipEvents = events.filter((e) => e.ip_address === ip);
                       const maxSeverity = ipEvents.reduce((max, e) => {
-                        const order = { low: 0, medium: 1, high: 2, critical: 3 };
+                        const order: Record<string, number> = { low: 0, medium: 1, high: 2, critical: 3 };
                         return order[e.severity] > order[max] ? e.severity : max;
-                      }, 'low' as string);
+                      }, 'low' as SocEvent['severity']);
                       return (
                         <tr key={ip} className="hover:bg-gray-50">
                           <td className="py-2 px-3 text-sm font-mono text-gray-900">{ip}</td>

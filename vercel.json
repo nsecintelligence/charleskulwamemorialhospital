@@ -59,6 +59,12 @@
       ]
     }
   ],
+  "rewrites": [
+    {
+      "source": "/((?!api/.*|assets/.*|images/.*|blocked\\.html).*)",
+      "destination": "/index.html"
+    }
+  ],
   "redirects": [
     {
       "source": "/.env",

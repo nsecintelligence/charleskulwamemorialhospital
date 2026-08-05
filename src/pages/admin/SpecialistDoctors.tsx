@@ -8,11 +8,8 @@ import {
   Save,
   X,
   Clock,
-  User,
   Calendar,
   Award,
-  Phone,
-  Mail,
   Image,
   GripVertical,
 } from 'lucide-react';
@@ -184,7 +181,7 @@ export default function AdminSpecialistDoctors() {
     setSchedules([...schedules, { ...DEFAULT_SCHEDULE, day_of_week: availableDay.key }]);
   }
 
-  function handleScheduleChange(index: number, field: keyof DoctorSchedule, value: string | boolean) {
+  function handleScheduleChange(index: number, field: keyof DoctorSchedule, value: string | boolean | number) {
     const updated = [...schedules];
     updated[index] = { ...updated[index], [field]: value };
     setSchedules(updated);
@@ -394,9 +391,8 @@ export default function AdminSpecialistDoctors() {
                   Doctor Photo
                 </label>
                 <ImageUpload
-                  value={formData.photo_url}
+                  value={formData.photo_url ?? ''}
                   onChange={(url) => setFormData({ ...formData, photo_url: url })}
-                  bucket="images"
                   folder="doctors"
                 />
               </div>

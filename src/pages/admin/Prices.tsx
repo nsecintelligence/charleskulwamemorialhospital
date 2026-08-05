@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { ServicePrice } from '../../types';
-import { Save, Plus, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { Save, X } from 'lucide-react';
 
 export default function AdminPrices() {
   const [prices, setPrices] = useState<ServicePrice[]>([]);

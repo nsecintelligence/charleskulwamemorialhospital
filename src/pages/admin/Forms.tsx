@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import type { DownloadableForm } from '../../types';
-import { Save, Plus, X, ChevronUp, ChevronDown, Download } from 'lucide-react';
-import ImageUpload from '../../components/ImageUpload';
+import { Save, X, ChevronUp, ChevronDown, Download } from 'lucide-react';
 
 export default function AdminForms() {
   const [forms, setForms] = useState<DownloadableForm[]>([]);

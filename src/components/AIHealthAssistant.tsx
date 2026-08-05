@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Bot, User, Globe, Phone, Clock, MapPin, FileText, DollarSign } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Globe } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo, Department, Service, FAQ, ServicePrice, DownloadableForm } from '../types';
 
