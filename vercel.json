@@ -60,131 +60,108 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/((?!api/.*|assets/.*|images/.*|blocked\\.html).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "redirects": [
     {
       "source": "/.env",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.env(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.git/(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.aws/(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/phpmyadmin(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/wp-admin(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/wp-content(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/wp-login(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/config(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/backup(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/vendor/(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.htaccess",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.svn/(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/server-status",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/debug(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/actuator(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/adminer(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/manager(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/console(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     },
     {
       "source": "/.well-known/(.*)",
       "destination": "/blocked.html",
-      "permanent": false,
-      "statusCode": 403
+      "statusCode": 307
     }
   ]
 }
