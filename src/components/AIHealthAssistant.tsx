@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Bot, User, Globe } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo, Department, Service, FAQ, ServicePrice, DownloadableForm } from '../types';
+import { healthTopics } from '../data/healthTopics';
 
 type Language = 'en' | 'sw';
 
@@ -15,61 +16,47 @@ interface Message {
 const translations = {
   en: {
     title: 'AI Health Assistant',
-    placeholder: 'Ask me anything about our hospital...',
-    welcome: 'Hello! I am your AI Health Assistant. How can I help you today? You can ask about departments, services, appointments, visiting hours, prices, or download forms.',
+    placeholder: 'Ask about our hospital or health topics...',
+    welcome: 'Hello! I am your AI Health Assistant. I can help you with hospital information (departments, services, appointments, prices, forms) and health education (infectious diseases, cancer, HIV/AIDS, women\'s health, blood pressure, nutrition, and disease prevention). How can I help you today?',
     quickActions: [
       'Departments',
       'Services',
       'Book Appointment',
-      'Visiting Hours',
-      'Contact Info',
       'Prices',
-      'Forms',
-      'First Aid Tips',
+      'Infectious Diseases',
+      'Cancer Awareness',
+      'HIV & AIDS',
+      "Women's Health",
+      'Blood Pressure',
+      'Nutrition',
+      'Disease Prevention',
+      'First Aid',
     ],
-    suggestions: {
-      departments: 'Our departments include',
-      services: 'We offer services including',
-      appointments: 'To book an appointment, please provide your name, phone, preferred date and department.',
-      visitingHours: 'Visiting hours are',
-      contact: 'You can reach us at',
-      prices: 'Here are our service prices',
-      forms: 'You can download these forms',
-      firstAid: 'Here are some basic first aid tips',
-      emergency: 'For emergencies, please call',
-      default: 'I can help you with information about departments, services, appointments, visiting hours, contact info, prices, forms, or first aid tips. What would you like to know?',
-    },
+    default: 'I can help you with hospital info (departments, services, appointments, visiting hours, contact, prices, forms) or health education (infectious diseases, cancer, HIV/AIDS, women\'s health, blood pressure, nutrition, disease prevention, and first aid). What would you like to know?',
   },
   sw: {
     title: 'Msaidizi wa Afya AI',
-    placeholder: 'Niulize chochote kuhusu hospitali yetu...',
-    welcome: 'Habari! Mimi ni Msaidizi wako wa Afya wa AI. Ninawezaje kukusaidia leo? Unaweza kuuliza kuhusu idara, huduma, miadi, saa za ziara, bei, au kupakua fomu.',
+    placeholder: 'Uliza kuhusu hospitali au mada za afya...',
+    welcome: 'Habari! Mimi ni Msaidizi wako wa Afya wa AI. Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, bei, fomu) na elimu ya afya (magonjwa ya kuambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, na kuzuia magonjwa). Ninawezaje kukusaidia leo?',
     quickActions: [
       'Idara',
       'Huduma',
       'Panga Miadi',
-      'Saa za Ziara',
-      'Mawasiliano',
       'Bei',
-      'Fomu',
+      'Magonjwa ya Kuambukizwa',
+      'Ufahamu wa Saratani',
+      'VVU & UKIMWI',
+      'Afya ya Wanawake',
+      'Shinikizo la Damu',
+      'Lishe',
+      'Kuzuia Magonjwa',
       'Msaada wa Kwanza',
     ],
-    suggestions: {
-      departments: 'Idara zetu ni pamoja na',
-      services: 'Tunatoa huduma ikiwa ni pamoja na',
-      appointments: 'Kupanga miadi, tafadhali toa jina lako, nambari ya simu, tarehe unayopenda na idara.',
-      visitingHours: 'Saa za ziara ni',
-      contact: 'Unaweza kutupata kwa',
-      prices: 'Hapa kuna bei za huduma zetu',
-      forms: 'Unaweza kupakua fomu hizi',
-      firstAid: 'Hapa kuna vidokezo vya msaada wa kwanza',
-      emergency: 'Kwa dharura, tafadhali piga simu',
-      default: 'Ninaweza kukusaidia kwa taarifa kuhusu idara, huduma, miadi, saa za ziara, mawasiliano, bei, fomu, au vidokezo vya msaada wa kwanza. Ungependa kujua nini?',
-    },
+    default: 'Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, saa za ziara, mawasiliano, bei, fomu) au elimu ya afya (magonjwa ya kuambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, kuzuia magonjwa, na msaada wa kwanza). Ungependa kujua nini?',
   },
 };
 
- const firstAidTips = {
+const firstAidTips = {
   en: [
     { title: 'Cuts and Wounds', content: 'Apply direct pressure with a clean cloth. Elevate the wound above heart level. Seek medical help if bleeding doesn\'t stop after 10 minutes.' },
     { title: 'Burns', content: 'Cool the burn under running water for at least 10 minutes. Do not apply ice, butter, or creams. Cover with a clean, non-fluffy dressing.' },
@@ -81,10 +68,49 @@ const translations = {
     { title: 'Mikwaruzo na Vidonda', content: 'Bonyeza moja kwa moja na kitambaa safi. Inue kidonda juu ya kiwango cha moyo. Tafuta msaada wa matibabu ikiwa damu haijachacha baada ya dakika 10.' },
     { title: 'Ngozi ya kuchoma', content: 'Baridisha eneo la kuchoma chini ya maji yanayotiririka kwa angalau dakika 10. Usitumie barafu, siagi, au marashi. Funika na uwekaji safi.' },
     { title: 'Kukwama', content: 'Kwa watu wazima: Simama nyuma na fanya kumsukuma tumbo. Kwa watoto wachanga: Shikilia kichwa na piga pingaizi 5 mgongoni.' },
-    { title: 'Kuzimia', content: 'Mlaze mtu mgoni pake na kwinua miguu. Fungua nguo zilizokazika. Angalia kupumua na mapigo. Usipe chakula au maji.' },
+    { title: 'Kuzimia', content: 'Mlaze mtu mgonj pake na kwinua miguu. Fungua nguo zilizokazika. Angalia kupumua na mapigo. Usipe chakula au maji.' },
     { title: 'Mifupa iliyovunjika', content: 'Hifadhi eneo lililojeruhiwa lisilikike. Weka barafu iliyofunikwa na kitambaa. Usijaribu kunyoosha mfupa. Tafuta msaada wa matibabu mara moja.' },
   ],
 };
+
+function formatTopicResponse(topicId: string, lang: Language): string {
+  const topic = healthTopics.find(t => t.id === topicId);
+  if (!topic) return '';
+  const c = topic[lang];
+  let response = `**${c.label}**\n\n${c.summary}\n\n`;
+  c.sections.forEach(s => {
+    response += `**${s.heading}**: ${s.body}\n\n`;
+  });
+  if (c.prevention && c.prevention.length > 0) {
+    const heading = lang === 'sw' ? 'Jinsi ya Kuzuia' : 'How to Prevent';
+    response += `**${heading}:**\n`;
+    c.prevention.forEach((p, i) => {
+      response += `${i + 1}. ${p}\n`;
+    });
+  }
+  return response;
+}
+
+function matchHealthTopic(input: string, lang: Language): string | null {
+  const lower = input.toLowerCase();
+  for (const topic of healthTopics) {
+    const keywords = topic[lang].keywords;
+    for (const kw of keywords) {
+      if (lower.includes(kw.toLowerCase())) {
+        return formatTopicResponse(topic.id, lang);
+      }
+    }
+    // Also check English keywords even in Swahili mode (commonly mixed)
+    if (lang === 'sw') {
+      for (const kw of topic.en.keywords) {
+        if (lower.includes(kw.toLowerCase())) {
+          return formatTopicResponse(topic.id, lang);
+        }
+      }
+    }
+  }
+  return null;
+}
 
 export default function AIHealthAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -104,7 +130,6 @@ export default function AIHealthAssistant() {
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Data from database
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [services, setServices] = useState<Service[]>([]);
@@ -113,9 +138,7 @@ export default function AIHealthAssistant() {
   const [forms, setForms] = useState<DownloadableForm[]>([]);
 
   useEffect(() => {
-    if (isOpen) {
-      fetchData();
-    }
+    if (isOpen) fetchData();
   }, [isOpen]);
 
   useEffect(() => {
@@ -152,9 +175,31 @@ export default function AIHealthAssistant() {
     }
   }, [isOpen, language]);
 
+  // Quick-action label to topic-id mapping
+  const quickActionToTopicId: Record<string, string> = {
+    'Infectious Diseases': 'infectious-diseases',
+    'Cancer Awareness': 'cancer',
+    'HIV & AIDS': 'hiv',
+    "Women's Health": 'womens-health',
+    'Blood Pressure': 'blood-pressure',
+    'Nutrition': 'nutrition',
+    'Disease Prevention': 'disease-prevention',
+    'Magonjwa ya Kuambukizwa': 'infectious-diseases',
+    'Ufahamu wa Saratani': 'cancer',
+    'VVU & UKIMWI': 'hiv',
+    'Afya ya Wanawake': 'womens-health',
+    'Shinikizo la Damu': 'blood-pressure',
+    'Lishe': 'nutrition',
+    'Kuzuia Magonjwa': 'disease-prevention',
+  };
+
   const generateResponse = (userInput: string): string => {
     const input = userInput.toLowerCase();
     const isSwahili = language === 'sw';
+
+    // Health education topics (check before hospital queries)
+    const topicResponse = matchHealthTopic(userInput, language);
+    if (topicResponse) return topicResponse;
 
     // Department queries
     if (input.includes('department') || input.includes('idara')) {
@@ -162,13 +207,11 @@ export default function AIHealthAssistant() {
       return `${isSwahili ? 'Idara zetu ni pamoja na' : 'Our departments include'}: ${deptList || 'General Medicine, Surgery, Pediatrics, Obstetrics, Emergency Care'}. ${isSwahili ? 'Ni ipi unayohitaji kujua zaidi?' : 'Which one would you like to know more about?'}`;
     }
 
-    // Services queries
     if (input.includes('service') || input.includes('huduma')) {
       const svcList = services.slice(0, 5).map(s => s.name).join(', ');
       return `${isSwahili ? 'Tunatoa huduma ikiwa ni pamoja na' : 'We offer services including'}: ${svcList || 'Consultations, Laboratory, X-Ray, Pharmacy, Emergency Care'}. ${isSwahili ? 'Ungependa maelezo zaidi?' : 'Would you like more details?'}`;
     }
 
-    // Appointment queries
     if (input.includes('appointment') || input.includes('miadi') || input.includes('book') || input.includes('panga')) {
       setShowAppointmentForm(true);
       return isSwahili
@@ -176,28 +219,24 @@ export default function AIHealthAssistant() {
         : 'To book an appointment, please fill in the form below. We will call you to confirm.';
     }
 
-    // Visiting hours
     if (input.includes('hour') || input.includes('saa') || input.includes('visit') || input.includes('ziara')) {
       return isSwahili
         ? `Saa za ziara: Jumatatu hadi Ijumaa: 10:00 asubuhi - 8:00 jioni, Jumamosi na Jumapili: 10:00 asubuhi - 6:00 jioni. Saa za dharura: 24/7.`
         : `Visiting hours: Mon-Fri: 10:00 AM - 8:00 PM, Sat-Sun: 10:00 AM - 6:00 PM. Emergency: 24/7.`;
     }
 
-    // Contact queries
     if (input.includes('contact') || input.includes('phone') || input.includes('email') || input.includes('mawasiliano') || input.includes('simu')) {
       return isSwahili
         ? `Mawasiliano: Simu: ${contactInfo?.phone || '+255 123 456 789'}, Dharura: ${contactInfo?.emergency_phone || '+255 911'}, Barua: ${contactInfo?.email || 'info@hospital.com'}`
         : `Contact us: Phone: ${contactInfo?.phone || '+255 123 456 789'}, Emergency: ${contactInfo?.emergency_phone || '+255 911'}, Email: ${contactInfo?.email || 'info@hospital.com'}`;
     }
 
-    // Address
     if (input.includes('address') || input.includes('location') || input.includes('mahali') || input.includes('eneo')) {
       return isSwahili
         ? `Mahali: ${contactInfo?.address || 'Hospitali iko katikati ya jiji'}. Tunaweza kukupeleka kwa dalili za barabara.`
         : `Our address: ${contactInfo?.address || 'Hospital located in the city center'}. We can provide directions.`;
     }
 
-    // Price queries
     if (input.includes('price') || input.includes('cost') || input.includes('fee') || input.includes('bei')) {
       if (prices.length > 0) {
         const priceList = prices.slice(0, 5).map(p => `${p.service_name}: ${p.currency} ${p.price.toLocaleString()}`).join('\n');
@@ -208,7 +247,6 @@ export default function AIHealthAssistant() {
         : 'For accurate pricing, please call our reception. Prices depend on required treatments.';
     }
 
-    // Forms queries
     if (input.includes('form') || input.includes('download') || input.includes('fomu')) {
       if (forms.length > 0) {
         const formList = forms.map(f => `- ${f.name}`).join('\n');
@@ -219,14 +257,12 @@ export default function AIHealthAssistant() {
         : 'Forms are available at our office. You can download registration, insurance, and other forms.';
     }
 
-    // First aid queries
-    if (input.includes('first aid') || input.includes('msaada wa kwanza') || input.includes('emergency') || input.includes('dharura')) {
+    if (input.includes('first aid') || input.includes('msaada wa kwanza')) {
       const tips = firstAidTips[language];
-      const tipsList = tips.map(t => `**${t.title}**: ${t.content}`).join('\n\n');
+      const tipsList = tips.map(tip => `**${tip.title}**: ${tip.content}`).join('\n\n');
       return `${isSwahili ? 'Vidokezo vya msaada wa kwanza:' : 'Basic first aid tips:'}\n\n${tipsList}\n\n${isSwahili ? 'Kwa dharura, piga simu: ' + (contactInfo?.emergency_phone || '+255 911') : 'For emergencies, call: ' + (contactInfo?.emergency_phone || '+255 911')}`;
     }
 
-    // FAQ queries
     if (input.includes('faq') || input.includes('question') || input.includes('swali')) {
       if (faqs.length > 0) {
         const faqList = faqs.slice(0, 3).map(f => `${isSwahili ? 'S' : 'Q'}: ${f.question}\n${isSwahili ? 'J' : 'A'}: ${f.answer}`).join('\n\n');
@@ -237,29 +273,25 @@ export default function AIHealthAssistant() {
         : 'Visit our FAQ page for more answers to common questions.';
     }
 
-    // Emergency
     if (input.includes('emergency') || input.includes('dharura')) {
       return isSwahili
         ? `KWA DHARURA: Piga simu ${contactInfo?.emergency_phone || '+255 911'} AU nenda moja kwa moja kwenye chumba cha dharura. Emergency: 24/7.`
         : `FOR EMERGENCIES: Call ${contactInfo?.emergency_phone || '+255 911'} OR go directly to the Emergency Room. Emergency: 24/7.`;
     }
 
-    // Greetings
     if (input.includes('hello') || input.includes('hi') || input.includes('jambo') || input.includes('habari') || input.includes('salam')) {
       return isSwahili
-        ? 'Jambo! Karibu hospitali yetu. Ninawezaje kukusaidia leo? Niulize kuhusu idara, huduma, miadi, au chochote kingine.'
-        : 'Hello! Welcome to our hospital. How can I help you today? Ask me about departments, services, appointments, or anything else.';
+        ? 'Jambo! Karibu hospitali yetu. Ninawezaje kukusaidia leo? Niulize kuhusu idara, huduma, miadi, au mada za elimu ya afya.'
+        : 'Hello! Welcome to our hospital. How can I help you today? Ask me about departments, services, appointments, or health education topics.';
     }
 
-    // Thank you
     if (input.includes('thank') || input.includes('asante') || input.includes('shukran')) {
       return isSwahili
         ? 'Karibu sana! Kuna kitu kingine ninachoweza kukusaidia?'
         : 'You\'re welcome! Is there anything else I can help you with?';
     }
 
-    // Default response
-    return t.suggestions.default;
+    return t.default;
   };
 
   const handleSend = () => {
@@ -291,9 +323,16 @@ export default function AIHealthAssistant() {
   };
 
   const handleQuickAction = (action: string) => {
-    const actionInput = action === 'Book Appointment' || action === 'Panga Miadi'
-      ? (language === 'sw' ? 'nataka panga miadi' : 'book appointment')
-      : action.toLowerCase();
+    const topicId = quickActionToTopicId[action];
+    const actionInput =
+      topicId ? (language === 'sw'
+        ? healthTopics.find(t => t.id === topicId)!.sw.label
+        : healthTopics.find(t => t.id === topicId)!.en.label)
+      : action === 'Book Appointment' || action === 'Panga Miadi'
+        ? (language === 'sw' ? 'nataka panga miadi' : 'book appointment')
+        : action === 'First Aid' || action === 'Msaada wa Kwanza'
+          ? (language === 'sw' ? 'msaada wa kwanza' : 'first aid')
+          : action.toLowerCase();
     setInput(actionInput);
     handleSend();
   };
@@ -303,7 +342,7 @@ export default function AIHealthAssistant() {
     const { error } = await supabase.from('appointments').insert(appointmentData);
     if (!error) {
       const successMsg = language === 'sw'
-        ? 'Miadi yako imetumwa! Tutakupigia simu hapo karibute kuthibitisha.'
+        ? 'Miadi yako imetumwa! Tutakupigia simu hapo karibuni kuthibitisha.'
         : 'Your appointment request has been submitted! We will call you shortly to confirm.';
       setMessages(prev => [...prev, {
         id: Date.now().toString(),
@@ -338,7 +377,6 @@ export default function AIHealthAssistant() {
 
   return (
     <>
-      {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
         className={`fixed bottom-6 right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-700 text-white shadow-lg flex items-center justify-center hover:bg-green-800 transition-all ${
@@ -349,7 +387,6 @@ export default function AIHealthAssistant() {
         <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7" />
       </button>
 
-      {/* Chat Window */}
       <div
         className={`fixed z-50 transition-all duration-300 ${
           isOpen
@@ -366,7 +403,6 @@ export default function AIHealthAssistant() {
         }}
       >
         <div className="bg-white rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden border border-gray-200">
-          {/* Header */}
           <div className="bg-green-700 text-white px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Bot className="w-6 h-6" />
@@ -390,7 +426,6 @@ export default function AIHealthAssistant() {
             </div>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-gray-50">
             {messages.map((msg) => (
               <div
@@ -434,7 +469,6 @@ export default function AIHealthAssistant() {
               </div>
             )}
 
-            {/* Appointment Form */}
             {showAppointmentForm && (
               <form onSubmit={handleAppointmentSubmit} className="bg-white rounded-xl p-3 border shadow-sm space-y-2">
                 <input
@@ -500,7 +534,6 @@ export default function AIHealthAssistant() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Actions */}
           <div className="px-2 py-2 border-t bg-white overflow-x-auto">
             <div className="flex gap-2 pb-1">
               {t.quickActions.map((action, i) => (
@@ -515,7 +548,6 @@ export default function AIHealthAssistant() {
             </div>
           </div>
 
-          {/* Input */}
           <div className="p-2 border-t bg-white">
             <div className="flex gap-2">
               <input
