@@ -145,3 +145,30 @@ export interface ServicePrice {
   is_active: boolean;
   created_at: string;
 }
+
+export interface SpecialistDoctor {
+  id: string;
+  name: string;
+  specialty: string;
+  qualification: string | null;
+  photo_url: string | null;
+  phone: string | null;
+  email: string | null;
+  is_active: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DoctorSchedule {
+  id: string;
+  doctor_id: string;
+  day_of_week: number;
+  start_time: string;
+  end_time: string;
+  room_number: string | null;
+  notes: string | null;
+  is_available: boolean;
+  created_at: string;
+  updated_at: string;
+}

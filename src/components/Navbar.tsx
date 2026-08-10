@@ -3,17 +3,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { TopBar } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
-const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About Us' },
-  { path: '/services', label: 'Services' },
-  { path: '/clinic', label: 'Clinic' },
-  { path: '/departments', label: 'Departments' },
-  { path: '/gallery', label: 'Gallery' },
-  { path: '/news', label: 'News' },
-  { path: '/faq', label: 'FAQ' },
-  { path: '/contact', label: 'Contact' },
+const navLinkKeys = [
+  { path: '/', key: 'nav.home' },
+  { path: '/about', key: 'nav.about' },
+  { path: '/services', key: 'nav.services' },
+  { path: '/clinic', key: 'nav.clinic' },
+  { path: '/departments', key: 'nav.departments' },
+  { path: '/doctors', key: 'nav.doctors' },
+  { path: '/gallery', key: 'nav.gallery' },
+  { path: '/news', key: 'nav.news' },
+  { path: '/faq', key: 'nav.faq' },
+  { path: '/contact', key: 'nav.contact' },
 ];
 
 export default function Navbar() {
@@ -23,6 +26,9 @@ export default function Navbar() {
   const [siteLogo, setSiteLogo] = useState<string | null>(null);
   const [topBar, setTopBar] = useState<TopBar | null>(null);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navLinks = navLinkKeys.map(l => ({ path: l.path, label: t(l.key) }));
 
   useEffect(() => {
     Promise.all([
@@ -67,10 +73,13 @@ export default function Navbar() {
         <div className="container-width">
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center gap-4 text-sm">
-            {/* Left: Emergency */}
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <Phone className="w-4 h-4" />
-              <span className="font-medium">Emergency: {topBar?.emergency_phone || '+1 (555) 911-0000'}</span>
+            {/* Left: Emergency + Language Toggle */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                <span className="font-medium">{t('topbar.emergency')}: {topBar?.emergency_phone || '+1 (555) 911-0000'}</span>
+              </div>
+              <LanguageToggle variant="light" />
             </div>
 
             {/* Center: Marquee */}
@@ -106,7 +115,7 @@ export default function Navbar() {
             {/* Right: Working Hours */}
             <div className="flex items-center gap-2 flex-shrink-0">
               <Clock className="w-4 h-4" />
-              <span>{topBar?.working_hours || 'Mon-Sun: 24/7'}</span>
+              <span>{topBar?.working_hours || t('topbar.workingHours')}</span>
             </div>
           </div>
 
@@ -136,13 +145,10 @@ export default function Navbar() {
               <div className="flex items-center justify-center gap-3">
                 <span className="flex items-center gap-1">
                   <Phone className="w-3 h-3" />
-                  Emergency: {topBar?.emergency_phone || '+1 (555) 911-0000'}
+                  {t('topbar.emergency')}: {topBar?.emergency_phone || '+1 (555) 911-0000'}
                 </span>
                 <span className="text-white/60">|</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {topBar?.working_hours || '24/7'}
-                </span>
+                <LanguageToggle variant="light" />
               </div>
             )}
           </div>
@@ -192,6 +198,9 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t bg-white">
           <div className="container-width py-2 space-y-1">
+            <div className="px-3 py-2 border-b border-gray-100 mb-1">
+              <LanguageToggle variant="dark" />
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.path}

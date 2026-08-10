@@ -3,12 +3,15 @@ import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'luc
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo } from '../types';
+import { useLanguage } from '../context/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 export default function Footer() {
   const [contact, setContact] = useState<ContactInfo | null>(null);
   const [siteName, setSiteName] = useState('');
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     Promise.all([
@@ -51,21 +54,22 @@ export default function Footer() {
               <span className="text-xl font-bold leading-tight">{siteName}</span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Providing world-class healthcare with compassion and excellence since 1985.
+              {t('footer.tagline')}
             </p>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <div className="space-y-2 text-sm">
-              <Link to="/services" className="block text-gray-400 hover:text-white transition-colors">Services</Link>
-              <Link to="/departments" className="block text-gray-400 hover:text-white transition-colors">Departments</Link>
-              <Link to="/about" className="block text-gray-400 hover:text-white transition-colors">About Us</Link>
-              <Link to="/news" className="block text-gray-400 hover:text-white transition-colors">News</Link>
-              <Link to="/contact" className="block text-gray-400 hover:text-white transition-colors">Contact</Link>
+              <Link to="/services" className="block text-gray-400 hover:text-white transition-colors">{t('nav.services')}</Link>
+              <Link to="/departments" className="block text-gray-400 hover:text-white transition-colors">{t('nav.departments')}</Link>
+              <Link to="/doctors" className="block text-gray-400 hover:text-white transition-colors">{t('nav.doctors')}</Link>
+              <Link to="/about" className="block text-gray-400 hover:text-white transition-colors">{t('nav.about')}</Link>
+              <Link to="/news" className="block text-gray-400 hover:text-white transition-colors">{t('nav.news')}</Link>
+              <Link to="/contact" className="block text-gray-400 hover:text-white transition-colors">{t('nav.contact')}</Link>
             </div>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.contactInfo')}</h4>
             <div className="space-y-3 text-sm text-gray-400">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 text-green-700" />
@@ -81,12 +85,12 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-green-700" />
-                <span className="text-red-700 font-semibold">Emergency: {contact?.emergency_phone || '+1 (555) 911-0000'}</span>
+                <span className="text-red-700 font-semibold">{t('topbar.emergency')}: {contact?.emergency_phone || '+1 (555) 911-0000'}</span>
               </div>
             </div>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+            <h4 className="text-lg font-semibold mb-4">{t('footer.followUs')}</h4>
             <div className="flex gap-3">
               {contact?.social_facebook && (
                 <a href={contact.social_facebook} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-700 transition-colors">
@@ -111,8 +115,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-500">
-          <p>&copy; {new Date().getFullYear()} {siteName}. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+          <p>&copy; {new Date().getFullYear()} {siteName}. {t('footer.rights')}</p>
+          <LanguageToggle variant="dark" />
         </div>
       </div>
     </footer>
