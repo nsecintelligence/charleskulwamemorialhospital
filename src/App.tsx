@@ -30,6 +30,20 @@ import AdminSocPanel from './pages/admin/SocPanel';
 import AdminSpecialistDoctors from './pages/admin/SpecialistDoctors';
 import AdminLogin from './pages/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
+import Doctors from './pages/Doctors';
+import HmsLogin from './pages/hms/Login';
+import HmsLayout from './components/hms/HmsLayout';
+import HmsProtectedRoute from './components/hms/HmsProtectedRoute';
+import HmsDashboard from './pages/hms/Dashboard';
+import HmsPatients from './pages/hms/Patients';
+import HmsEhr from './pages/hms/Ehr';
+import HmsCpoe from './pages/hms/Cpoe';
+import HmsAppointments from './pages/hms/Appointments';
+import HmsBeds from './pages/hms/Beds';
+import HmsStaff from './pages/hms/Staff';
+import HmsLabs from './pages/hms/Labs';
+import HmsRadiology from './pages/hms/Radiology';
+import HmsPharmacy from './pages/hms/Pharmacy';
 
 function App() {
   return (
@@ -40,6 +54,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="services" element={<Services />} />
           <Route path="departments" element={<Departments />} />
+          <Route path="doctors" element={<Doctors />} />
           <Route path="gallery" element={<Gallery />} />
           <Route path="news" element={<News />} />
           <Route path="news/:id" element={<NewsDetail />} />
@@ -66,6 +81,19 @@ function App() {
           <Route path="security" element={<AdminSecurityLogs />} />
           <Route path="soc" element={<AdminSocPanel />} />
           <Route path="specialist-doctors" element={<AdminSpecialistDoctors />} />
+        </Route>
+        <Route path="/hms/login" element={<HmsLogin />} />
+        <Route path="/hms" element={<HmsProtectedRoute><HmsLayout /></HmsProtectedRoute>}>
+          <Route index element={<HmsDashboard />} />
+          <Route path="patients" element={<HmsPatients />} />
+          <Route path="ehr" element={<HmsEhr />} />
+          <Route path="cpoe" element={<HmsCpoe />} />
+          <Route path="appointments" element={<HmsAppointments />} />
+          <Route path="beds" element={<HmsBeds />} />
+          <Route path="staff" element={<HmsStaff />} />
+          <Route path="labs" element={<HmsLabs />} />
+          <Route path="radiology" element={<HmsRadiology />} />
+          <Route path="pharmacy" element={<HmsPharmacy />} />
         </Route>
       </Routes>
     </BrowserRouter>
