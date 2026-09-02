@@ -12,7 +12,7 @@ const navLinkKeys = [
   { path: '/services', key: 'nav.services' },
   { path: '/clinic', key: 'nav.clinic' },
   { path: '/departments', key: 'nav.departments' },
-  { path: '/doctors', key: 'nav.doctors' },
+  { path: '/doctors', key: 'nav.hms' },
   { path: '/gallery', key: 'nav.gallery' },
   { path: '/news', key: 'nav.news' },
   { path: '/faq', key: 'nav.faq' },

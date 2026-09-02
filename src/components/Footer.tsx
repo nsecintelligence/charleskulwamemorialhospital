@@ -62,7 +62,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm">
               <Link to="/services" className="block text-gray-400 hover:text-white transition-colors">{t('nav.services')}</Link>
               <Link to="/departments" className="block text-gray-400 hover:text-white transition-colors">{t('nav.departments')}</Link>
-              <Link to="/doctors" className="block text-gray-400 hover:text-white transition-colors">{t('nav.doctors')}</Link>
+              <Link to="/doctors" className="block text-gray-400 hover:text-white transition-colors">{t('nav.hms')}</Link>
               <Link to="/about" className="block text-gray-400 hover:text-white transition-colors">{t('nav.about')}</Link>
               <Link to="/news" className="block text-gray-400 hover:text-white transition-colors">{t('nav.news')}</Link>
               <Link to="/contact" className="block text-gray-400 hover:text-white transition-colors">{t('nav.contact')}</Link>
