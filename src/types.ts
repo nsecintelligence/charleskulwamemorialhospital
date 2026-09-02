@@ -87,6 +87,10 @@ export interface HomepageContent {
   announcement_title: string | null;
   announcement_text: string | null;
   announcement_active: boolean;
+  director_name: string | null;
+  director_title: string | null;
+  director_statement: string | null;
+  director_photo_url: string | null;
   updated_at: string;
 }
 

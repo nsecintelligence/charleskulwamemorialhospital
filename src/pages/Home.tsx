@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
@@ -283,6 +283,50 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* Executive Director's Statement */}
+      {home?.director_name && home?.director_statement && (
+        <section className="section-padding bg-white">
+          <div className="container-width">
+            <ScrollReveal animation="fade-up">
+              <div className="max-w-5xl mx-auto bg-gradient-to-br from-emerald-50 via-white to-green-50 rounded-3xl shadow-lg overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+                  {/* Photo */}
+                  <div className="relative md:col-span-1 bg-gradient-to-br from-emerald-600 to-green-800 p-8 flex items-center justify-center">
+                    {home.director_photo_url ? (
+                      <div className="relative">
+                        <div className="absolute -inset-1 bg-white/30 rounded-full blur-md" />
+                        <img
+                          src={home.director_photo_url}
+                          alt={home.director_name}
+                          className="relative w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-xl"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-white/20 flex items-center justify-center border-4 border-white/30">
+                        <Users className="w-16 h-16 text-white/70" />
+                      </div>
+                    )}
+                  </div>
+                  {/* Statement */}
+                  <div className="md:col-span-2 p-8 md:p-10 flex flex-col justify-center">
+                    <Quote className="w-10 h-10 text-emerald-300 mb-4" />
+                    <p className="text-gray-700 text-lg md:text-xl leading-relaxed mb-6 italic">
+                      {home.director_statement}
+                    </p>
+                    <div className="border-l-4 border-emerald-600 pl-4">
+                      <h3 className="text-xl font-bold text-gray-900">{home.director_name}</h3>
+                      {home.director_title && (
+                        <p className="text-emerald-700 font-medium mt-1">{home.director_title}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* Featured Services */}
       {featuredServices.length > 0 && (
