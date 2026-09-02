@@ -2,7 +2,9 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide } from '../types';
+import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ } from '../types';
+import ScrollReveal from '../components/ScrollReveal';
+import { HelpCircle, ChevronDown } from 'lucide-react';
 
 export default function Home() {
   const [home, setHome] = useState<HomepageContent | null>(null);
@@ -10,23 +12,27 @@ export default function Home() {
   const [latestNews, setLatestNews] = useState<NewsItem[]>([]);
   const [contact, setContact] = useState<ContactInfo | null>(null);
   const [slides, setSlides] = useState<HeroSlide[]>([]);
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [homeRes, servicesRes, newsRes, contactRes, slidesRes] = await Promise.all([
+      const [homeRes, servicesRes, newsRes, contactRes, slidesRes, faqRes] = await Promise.all([
         supabase.from('homepage_content').select('*').maybeSingle(),
         supabase.from('services').select('*').eq('featured', true).order('sort_order'),
         supabase.from('news').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(3),
         supabase.from('contact_info').select('*').maybeSingle(),
         supabase.from('hero_slides').select('*').eq('is_active', true).order('sort_order'),
+        supabase.from('faq').select('*').order('sort_order').limit(6),
       ]);
       if (homeRes.data) setHome(homeRes.data);
       if (servicesRes.data) setFeaturedServices(servicesRes.data);
       if (newsRes.data) setLatestNews(newsRes.data);
       if (contactRes.data) setContact(contactRes.data);
       if (slidesRes.data && slidesRes.data.length > 0) setSlides(slidesRes.data);
+      if (faqRes.data) setFaqs(faqRes.data);
       setLoading(false);
     };
     fetchData();
@@ -251,6 +257,7 @@ export default function Home() {
       {/* Stats */}
       <section className="bg-white py-12 border-b">
         <div className="container-width">
+          <ScrollReveal animation="fade-in">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <Clock className="w-8 h-8 text-green-700 mx-auto mb-2" />
@@ -273,6 +280,7 @@ export default function Home() {
               <div className="text-sm text-gray-600">Departments</div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -280,13 +288,14 @@ export default function Home() {
       {featuredServices.length > 0 && (
         <section className="section-padding bg-gray-50">
           <div className="container-width">
-            <div className="text-center mb-12">
+            <ScrollReveal animation="fade-up" className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Our Services</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">Comprehensive healthcare services delivered with cutting-edge technology and compassionate care.</p>
-            </div>
+            </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredServices.map((service) => (
-                <div key={service.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group">
+              {featuredServices.map((service, i) => (
+                <ScrollReveal key={service.id} animation="fade-up" delay={i * 100}>
+                <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group">
                   <div className="h-48 overflow-hidden">
                     <img src={service.image_url || ''} alt={service.name} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
@@ -298,13 +307,14 @@ export default function Home() {
                     </Link>
                   </div>
                 </div>
+                </ScrollReveal>
               ))}
             </div>
-            <div className="text-center mt-10">
+            <ScrollReveal animation="fade-up" className="text-center mt-10">
               <Link to="/services" className="btn-primary inline-flex items-center gap-2">
                 View All Services <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
       )}
@@ -312,14 +322,14 @@ export default function Home() {
       {/* Insurance Services */}
       <section className="section-padding bg-gradient-to-br from-emerald-50 to-green-50">
         <div className="container-width">
-          <div className="text-center mb-12">
+          <ScrollReveal animation="fade-up" className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4">
               <ShieldCheck className="w-4 h-4" />
               Insurance Partners
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Insurance Services</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">We work with major insurance providers to ensure accessible and affordable healthcare for all our patients.</p>
-          </div>
+          </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {/* NHIF */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-lg hover:border-emerald-200 transition-all duration-300 group">
@@ -426,13 +436,14 @@ export default function Home() {
       {latestNews.length > 0 && (
         <section className="section-padding bg-white">
           <div className="container-width">
-            <div className="text-center mb-12">
+            <ScrollReveal animation="fade-up" className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Latest News</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">Stay updated with the latest happenings at City Hospital.</p>
-            </div>
+            </ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {latestNews.map((item) => (
-                <Link key={item.id} to={`/news/${item.id}`} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group">
+              {latestNews.map((item, i) => (
+                <ScrollReveal key={item.id} animation="fade-up" delay={i * 100}>
+                <Link to={`/news/${item.id}`} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow group block">
                   <div className="h-48 overflow-hidden">
                     <img src={item.featured_image || ''} alt={item.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                   </div>
@@ -444,12 +455,50 @@ export default function Home() {
                     <p className="text-sm text-gray-600 line-clamp-3">{item.content.substring(0, 120)}...</p>
                   </div>
                 </Link>
+                </ScrollReveal>
               ))}
             </div>
-            <div className="text-center mt-10">
+            <ScrollReveal animation="fade-up" className="text-center mt-10">
               <Link to="/news" className="btn-primary inline-flex items-center gap-2">
                 All News <ArrowRight className="w-4 h-4" />
               </Link>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
+      {/* FAQ Section */}
+      {faqs.length > 0 && (
+        <section className="section-padding bg-gray-50">
+          <div className="container-width max-w-3xl">
+            <ScrollReveal animation="fade-up" className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Frequently Asked Questions</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">Find answers to common questions about our services.</p>
+            </ScrollReveal>
+            <div className="space-y-4">
+              {faqs.map((item, i) => (
+                <ScrollReveal key={item.id} animation="fade-up" delay={i * 80}>
+                  <div className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
+                      className="w-full flex items-center justify-between p-5 text-left"
+                    >
+                      <div className="flex items-center gap-3">
+                        <HelpCircle className="w-5 h-5 text-green-700 flex-shrink-0" />
+                        <span className="font-semibold text-gray-900">{item.question}</span>
+                      </div>
+                      <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === item.id ? 'rotate-180' : ''}`} />
+                    </button>
+                    {openFaq === item.id && (
+                      <div className="px-5 pb-5">
+                        <div className="pl-8 text-gray-600 leading-relaxed border-l-2 border-green-700/30 ml-1">
+                          {item.answer}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </ScrollReveal>
+              ))}
             </div>
           </div>
         </section>
