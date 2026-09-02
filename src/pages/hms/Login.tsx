@@ -168,6 +168,17 @@ export default function HmsLogin() {
           <p className="mt-6 text-center text-xs text-gray-400">
             Only authorized hospital staff may access this system.
           </p>
+
+          {/* Demo credentials */}
+          <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <p className="text-xs font-semibold text-slate-600 mb-2 text-center">Demo Accounts</p>
+            <div className="grid grid-cols-2 gap-2 text-xs text-slate-500">
+              <div className="text-center"><span className="font-medium text-slate-700">Admin</span><br />admin@ckmhospital.org<br />Admin123!</div>
+              <div className="text-center"><span className="font-medium text-slate-700">Doctor</span><br />doctor@ckmhospital.org<br />Doctor123!</div>
+              <div className="text-center"><span className="font-medium text-slate-700">Nurse</span><br />nurse@ckmhospital.org<br />Nurse123!</div>
+              <div className="text-center"><span className="font-medium text-slate-700">Staff</span><br />staff@ckmhospital.org<br />Staff123!</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
