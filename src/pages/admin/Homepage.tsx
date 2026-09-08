@@ -91,7 +91,13 @@ export default function AdminHomepage() {
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Failed to save changes.';
+      console.error('Homepage save error:', err);
+      const message =
+        err && typeof err === 'object' && 'message' in err && typeof (err as Record<string, unknown>).message === 'string'
+          ? (err as Record<string, string>).message
+          : err instanceof Error
+            ? err.message
+            : 'Failed to save changes. Check console for details.';
       setSaveError(message);
     } finally {
       setSaving(false);
