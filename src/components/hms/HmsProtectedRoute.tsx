@@ -9,6 +9,7 @@ export default function HmsProtectedRoute({ children }: { children: React.ReactN
   const { user, loading: authLoading } = useAuth();
   const [userRole, setUserRole] = useState<string | null>(null);
   const [roleLoading, setRoleLoading] = useState(true);
+  const [roleError, setRoleError] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -18,13 +19,17 @@ export default function HmsProtectedRoute({ children }: { children: React.ReactN
         return;
       }
       try {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('user_roles')
           .select('role')
           .eq('user_id', user.id)
           .maybeSingle();
+
+        if (error) throw error;
         setUserRole(data?.role || null);
-      } catch {
+      } catch (error: unknown) {
+        console.error('HMS role lookup failed:', error);
+        setRoleError(error instanceof Error ? error.message : 'Unable to verify your HMS access.');
         setUserRole(null);
       } finally {
         setRoleLoading(false);
@@ -46,6 +51,21 @@ export default function HmsProtectedRoute({ children }: { children: React.ReactN
 
   if (!user) {
     return <Navigate to="/hms/login" replace state={{ from: location }} />;
+  }
+
+  if (roleError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md text-center">
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Access check failed</h2>
+          <p className="text-slate-600 mb-3">We could not verify your HMS role. Please try signing in again.</p>
+          <p className="text-sm text-red-600 mb-4">{roleError}</p>
+          <a href="/hms/login" className="text-emerald-600 hover:text-emerald-700 font-medium">
+            Return to HMS sign in
+          </a>
+        </div>
+      </div>
+    );
   }
 
   if (!userRole || !HMS_ROLES.includes(userRole)) {
