@@ -234,7 +234,7 @@ export default function Home() {
               <span className="text-green-700">{home?.welcome_title_line2 || 'Hospital'}</span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/80 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              Compassionate, high-quality healthcare with modern facilities, experienced professionals, and patient-first service.
+              Mahitaji ya Mgonjwa Kwanza,Kwetu Afya yako ni  kipaumbele chetu. Tunatoa huduma bora na za utaalamu wa hali ya juu, tukitumia vifaa vya kisasa na wataalamu waliobobea.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link
