@@ -16,8 +16,6 @@ const translations: Record<string, { en: string; sw: string }> = {
   'nav.services': { en: 'Services', sw: 'Huduma' },
   'nav.clinic': { en: 'Clinic', sw: 'Kliniki' },
   'nav.departments': { en: 'Departments', sw: 'Idara' },
-  'nav.doctors': { en: 'Doctors', sw: 'Madaktari' },
-  'nav.hms': { en: 'HMS', sw: 'HMS' },
   'nav.gallery': { en: 'Gallery', sw: 'Picha' },
   'nav.news': { en: 'News', sw: 'Habari' },
   'nav.faq': { en: 'FAQ', sw: 'Maswali' },
