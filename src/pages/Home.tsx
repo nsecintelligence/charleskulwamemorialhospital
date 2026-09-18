@@ -232,7 +232,7 @@ export default function Home() {
               MAHITAJI YA MGONJWA KWANZA
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              Kwetu, kila mgonjwa ni muhimu na kila safari ya afya ni ya kipekee. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.
+              Kwetu, kila mgonjwa ni muhimu. Tuko hapa kukusikiliza, kukujali na kukuhudumia, tukitumia utaalamu wetu kuhakikisha unapata huduma inayokufaa.
 
 
 
