@@ -232,7 +232,8 @@ export default function Home() {
               MAHITAJI YA MGONJWA KWANZA
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              Tunatoa huduma bora za afya, huduma za kibingwa na matibabu ya kisasa, kwa kuweka mahitaji ya kila mgonjwa mbele.
+              Tunajua kila mgonjwa ni tofauti, na kila mahitaji ya afya ni ya kipekee. Ndiyo maana tunakusikiliza, tunakujali na kukuhudumia kwa utaalamu na moyo wa dhati.
+
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link
