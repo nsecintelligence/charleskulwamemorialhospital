@@ -178,8 +178,8 @@ export default function Navbar() {
                 to={link.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === link.path
-                    ? 'text-green-700 bg-red-50'
-                    : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
+                    ? 'text-red-700 bg-red-50'
+                    : 'text-gray-700 hover:text-red-700 hover:bg-red-50'
                 }`}
               >
                 {link.label}
@@ -208,8 +208,8 @@ export default function Navbar() {
                 onClick={() => setOpen(false)}
                 className={`block px-3 py-2 rounded-md text-sm font-medium ${
                   location.pathname === link.path
-                    ? 'text-green-700 bg-red-50'
-                    : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
+                    ? 'text-red-700 bg-red-50'
+                    : 'text-gray-700 hover:text-red-700 hover:bg-red-50'
                 }`}
               >
                 {link.label}

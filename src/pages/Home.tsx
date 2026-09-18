@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote } from 'lucide-react';
+import { ArrowRight, Clock, Users, Award, Activity, ChevronRight, Phone, Mail, MapPin, ChevronLeft, ChevronRight as ChevronRightIcon, ShieldCheck, Quote, Stethoscope, FlaskConical, Pill, HeartPulse, CalendarDays } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { HomepageContent, Service, NewsItem, ContactInfo, HeroSlide, FAQ } from '../types';
 import ScrollReveal from '../components/ScrollReveal';
@@ -170,7 +170,7 @@ export default function Home() {
                 alt={slide.title || 'Hospital'}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/30" />
             </div>
           )) : (
             <>
@@ -179,7 +179,7 @@ export default function Home() {
                 alt="Hospital"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/30" />
             </>
           )}
         </div>
@@ -224,17 +224,15 @@ export default function Home() {
 
         <div className="relative container-width text-white z-10">
           <div className="max-w-2xl px-4 sm:px-0">
-            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/90 mb-3 sm:mb-5">
-              <span className="w-6 sm:w-8 h-0.5 bg-green-700" />
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5">
+              <span className="w-6 sm:w-8 h-0.5 bg-red-500" />
               24/7 Emergency & Specialist Care
             </span>
-            <h1 className="text-2xl sm:text-[2.6rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5">
-              <span className="text-blue-500">{home?.welcome_title || 'Charles Kulwa Memorial'}</span>
-              <br className="hidden sm:block" />
-              <span className="text-green-700">{home?.welcome_title_line2 || 'Hospital'}</span>
+            <h1 className="text-3xl sm:text-[2.8rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5 text-white">
+              MAHITAJI YA MGONJWA KWANZA
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-white/80 mb-6 sm:mb-9 max-w-xl leading-relaxed">
-              Mahitaji ya Mgonjwa Kwanza,Kwetu Afya yako ni  kipaumbele chetu. Tunatoa huduma bora na za utaalamu wa hali ya juu, tukitumia vifaa vya kisasa na wataalamu waliobobea.
+            <p className="text-sm sm:text-base md:text-lg text-white/90 mb-6 sm:mb-9 max-w-xl leading-relaxed">
+              Tunatoa huduma bora za afya, huduma za kibingwa na matibabu ya kisasa, kwa kuweka mahitaji ya kila mgonjwa mbele.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <Link
@@ -250,6 +248,56 @@ export default function Home() {
                 Our Services
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Today at CKM */}
+      <section className="bg-white py-10 md:py-14 border-b border-gray-100">
+        <div className="container-width">
+          <ScrollReveal animation="fade-up" className="mb-6 md:mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-1 h-8 bg-red-600 rounded-full" />
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Today at CKM</h2>
+            </div>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <ScrollReveal animation="fade-up" delay={0}>
+              <Link to="/services" className="bg-red-50 border border-red-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-red-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-red-600 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <HeartPulse className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Emergency</h3>
+                <p className="text-xs text-gray-500 mt-1">24/7 Care</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={100}>
+              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <FlaskConical className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Laboratory</h3>
+                <p className="text-xs text-gray-500 mt-1">Open Today</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={200}>
+              <Link to="/services" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <Pill className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Pharmacy</h3>
+                <p className="text-xs text-gray-500 mt-1">Open Today</p>
+              </Link>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={300}>
+              <Link to="/clinic" className="bg-emerald-50 border border-emerald-100 rounded-xl p-5 flex flex-col items-center text-center hover:shadow-md hover:border-emerald-200 transition-all group">
+                <div className="w-12 h-12 rounded-full bg-green-700 text-white flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <Stethoscope className="w-6 h-6" />
+                </div>
+                <h3 className="font-semibold text-gray-900 text-sm md:text-base">Specialist Clinic</h3>
+                <p className="text-xs text-gray-500 mt-1">By Appointment</p>
+              </Link>
+            </ScrollReveal>
           </div>
         </div>
       </section>

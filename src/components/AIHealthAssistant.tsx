@@ -397,12 +397,13 @@ export default function AIHealthAssistant() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-700 text-white shadow-lg flex items-center justify-center hover:bg-green-800 transition-all ${
+        className={`fixed bottom-6 right-6 z-50 bg-green-700 text-white shadow-lg flex items-center gap-2 rounded-full pl-4 pr-5 py-3.5 sm:pl-5 sm:pr-6 hover:bg-green-800 transition-all ${
           isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'
         }`}
-        aria-label="Open AI Health Assistant"
+        aria-label="Niulize Mimi - AI Health Assistant"
       >
-        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7" />
+        <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+        <span className="font-bold text-sm sm:text-base whitespace-nowrap">NIULIZE MIMI</span>
       </button>
 
       <div
