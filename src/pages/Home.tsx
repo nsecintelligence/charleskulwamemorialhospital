@@ -226,7 +226,7 @@ export default function Home() {
           <div className="max-w-2xl px-4 sm:px-0">
             <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-white/95 mb-3 sm:mb-5">
               <span className="w-6 sm:w-8 h-0.5 bg-red-500" />
-              24/7 Emergency & Specialist Care
+             KARIBU CHARLES KULWA MEMORIAL HOSPITAL
             </span>
             <h1 className="text-3xl sm:text-[2.8rem] md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] tracking-tight mb-3 sm:mb-5 text-white">
               MAHITAJI YA MGONJWA KWANZA
