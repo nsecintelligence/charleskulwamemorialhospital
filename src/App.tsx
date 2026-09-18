@@ -10,6 +10,7 @@ import NewsDetail from './pages/NewsDetail';
 import FAQ from './pages/FAQ';
 import Contact from './pages/Contact';
 import Clinic from './pages/Clinic';
+import ApiDocs from './pages/ApiDocs';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './pages/admin/Dashboard';
 import AdminServices from './pages/admin/Services';
@@ -47,6 +48,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="clinic" element={<Clinic />} />
         </Route>
+        <Route path="/api-docs" element={<ApiDocs />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboard />} />
