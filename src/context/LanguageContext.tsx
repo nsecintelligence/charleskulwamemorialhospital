@@ -97,16 +97,6 @@ const translations: Record<string, { en: string; sw: string }> = {
   'contact.bookingSent': { en: 'Booking Request Sent!', sw: 'Ombi la Miadi Limetumwa!' },
   'contact.bookingSentDesc': { en: 'Your appointment request has been submitted. We will call you shortly to confirm.', sw: 'Ombi lako la miadi limewasilishwa. Tutakupigia simu hapo karibuni kuthibitisha.' },
   'contact.bookingError': { en: 'There was an error submitting your request. Please try again or call us.', sw: 'Kulikuwa na hitilafu katika kuwasilisha ombi lako. Tafadhali jaribu tena au tupigie simu.' },
-
-  // Doctors page
-  'doctors.title': { en: 'Our Specialist Doctors', sw: 'Madaktari Bingwa Wetu' },
-  'doctors.subtitle': { en: 'Experienced specialists dedicated to your health and wellbeing.', sw: 'Wataalamu wenye uzoefu waliobobea katika afya yako.' },
-  'doctors.all': { en: 'All Specialties', sw: 'Maeneo Yote' },
-  'doctors.noDoctors': { en: 'No doctors available at the moment.', sw: 'Hakuna madaktari wanaopatikana kwa sasa.' },
-  'doctors.bookWith': { en: 'Book with this Doctor', sw: 'Panga na Daktari huyu' },
-  'doctors.schedule': { en: 'Schedule', sw: 'Ratiba' },
-  'doctors.contact': { en: 'Contact', sw: 'Mawasiliano' },
-  'doctors.days': { en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], sw: ['Jpl', 'Jt', 'Jn', 'Jtano', 'Alh', 'Iju', 'Jmn'] },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

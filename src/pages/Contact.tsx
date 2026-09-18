@@ -31,7 +31,7 @@ export default function Contact() {
     });
   }, []);
 
-  // Pre-fill from navigation state (from Doctors page)
+  // Pre-fill from navigation state (e.g. from AI assistant)
   useEffect(() => {
     if (location.state) {
       const state = location.state as { department?: string; doctorName?: string };
