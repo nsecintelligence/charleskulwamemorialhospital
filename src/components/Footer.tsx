@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import type { ContactInfo } from '../types';
 import { useLanguage } from '../context/LanguageContext';
-import { LanguageToggle } from './LanguageToggle';
 
 export default function Footer() {
   const [contact, setContact] = useState<ContactInfo | null>(null);
@@ -116,10 +115,6 @@ export default function Footer() {
         </div>
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-500">
           <p>&copy; {new Date().getFullYear()} {siteName}. {t('footer.rights')}</p>
-          <div className="flex items-center gap-4">
-            <Link to="/api-docs" className="text-gray-500 hover:text-white transition-colors">API</Link>
-            <LanguageToggle variant="dark" />
-          </div>
         </div>
       </div>
     </footer>

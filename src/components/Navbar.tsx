@@ -72,13 +72,12 @@ export default function Navbar() {
         <div className="container-width">
           {/* Desktop Layout */}
           <div className="hidden md:flex items-center gap-4 text-sm">
-            {/* Left: Emergency + Language Toggle */}
+            {/* Left: Emergency */}
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4" />
                 <span className="font-medium">{t('topbar.emergency')}: {topBar?.emergency_phone || '+1 (555) 911-0000'}</span>
               </div>
-              <LanguageToggle variant="light" />
             </div>
 
             {/* Center: Marquee */}
@@ -146,8 +145,6 @@ export default function Navbar() {
                   <Phone className="w-3 h-3" />
                   {t('topbar.emergency')}: {topBar?.emergency_phone || '+1 (555) 911-0000'}
                 </span>
-                <span className="text-white/60">|</span>
-                <LanguageToggle variant="light" />
               </div>
             )}
           </div>
@@ -157,7 +154,9 @@ export default function Navbar() {
       {/* Main Nav */}
       <div className="container-width">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <LanguageToggle variant="light" iconOnly />
+            <Link to="/" className="flex items-center gap-2">
             {siteLogo ? (
               <img src={siteLogo} alt={siteName} className="h-8 w-auto" loading="lazy" />
             ) : (
@@ -170,6 +169,7 @@ export default function Navbar() {
               <span className="text-green-700 text-xs font-medium leading-tight">Patient Needs Come First</span>
             </div>
           </Link>
+          </div>
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
@@ -197,9 +197,6 @@ export default function Navbar() {
       {open && (
         <div className="md:hidden border-t bg-white">
           <div className="container-width py-2 space-y-1">
-            <div className="px-3 py-2 border-b border-gray-100 mb-1">
-              <LanguageToggle variant="dark" />
-            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.path}
