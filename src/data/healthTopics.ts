@@ -586,4 +586,88 @@ export const healthTopics: HealthTopic[] = [
       ],
     },
   },
+  {
+    id: 'non-communicable-diseases',
+    icon: 'HeartPulse',
+    en: {
+      label: 'Non-Communicable Diseases',
+      keywords: ['non-communicable', 'ncd', 'chronic', 'asthma', 'epilepsy', 'sickle cell', 'sickle-cell', 'mental health', 'depression', 'anxiety', 'kidney disease', 'liver disease', 'cirrhosis', 'arthritis', 'chronic disease'],
+      summary: 'Non-communicable diseases (NCDs) are chronic conditions that are not passed from person to person. They develop slowly and often last a lifetime. Early detection, lifestyle changes, and regular treatment can manage them effectively.',
+      sections: [
+        {
+          heading: 'Asthma',
+          body: 'A chronic lung condition where airways narrow and swell, causing wheezing, coughing, chest tightness, and shortness of breath. Triggers include dust, smoke, pollen, cold air, and exercise. Treatment: inhalers (relievers for attacks, preventers for daily use). Avoid known triggers and always carry your reliever inhaler.',
+        },
+        {
+          heading: 'Epilepsy',
+          body: 'A neurological disorder causing recurrent seizures due to abnormal brain activity. Seizures vary from brief staring spells to convulsions. Treatment: anti-epileptic medications taken consistently. During a seizure: do not restrain the person, protect their head, turn them on their side, and do not put anything in their mouth. Seek medical help if a seizure lasts over 5 minutes.',
+        },
+        {
+          heading: 'Sickle Cell Disease',
+          body: 'An inherited blood disorder where red blood cells become rigid and sickle-shaped, blocking blood flow and causing pain crises, anemia, and organ damage. Common in sub-Saharan Africa. Treatment: folic acid supplements, pain management during crises, hydration, and routine vaccinations. Newborn screening is important. Genetic counseling helps couples understand risks.',
+        },
+        {
+          heading: 'Mental Health',
+          body: 'Mental health conditions like depression and anxiety are common and treatable. Depression: persistent sadness, loss of interest, fatigue, sleep changes, and thoughts of self-harm. Anxiety: excessive worry, restlessness, panic attacks, and physical symptoms like rapid heartbeat. Treatment includes counseling, medication, and support. Seek help early — mental illness is not a weakness.',
+        },
+        {
+          heading: 'Chronic Kidney Disease',
+          body: 'Gradual loss of kidney function, often caused by uncontrolled diabetes or hypertension. Symptoms appear late: swelling of legs, fatigue, changes in urination, nausea. Prevention: control blood sugar and blood pressure, avoid excessive painkiller use, drink adequate water, and get regular kidney function tests if at risk.',
+        },
+        {
+          heading: 'Arthritis',
+          body: 'Inflammation of joints causing pain, stiffness, and reduced movement. Osteoarthritis (wear and tear) and rheumatoid arthritis (autoimmune) are most common. Management: weight control, regular gentle exercise, physiotherapy, and anti-inflammatory medications. Joint protection techniques and assistive devices help daily activities.',
+        },
+      ],
+      prevention: [
+        'Maintain a healthy diet rich in fruits, vegetables, and whole grains',
+        'Exercise regularly — at least 30 minutes, 5 days a week',
+        'Avoid tobacco and limit alcohol consumption',
+        'Get regular health check-ups to detect conditions early',
+        'Take prescribed medications consistently and never skip doses',
+        'Manage stress through relaxation, social support, and adequate sleep',
+        'Know your family history and discuss risk factors with your doctor',
+      ],
+    },
+    sw: {
+      label: 'Magonjwa Yasiyoambukizwa',
+      keywords: ['magonjwa yasiyoambukizwa', 'yasiyo ambukizwa', 'asthma', 'pumufupi', 'kifafa', 'epilepsia', 'seli mundu', 'sickle cell', 'afya ya akili', 'unyogovu', 'wasiwasi', 'figo', 'ini', 'maungo'],
+      summary: 'Magonjwa yasiyoambukizwa ni magonjwa ya muda mrefu ambayo hayasambazwi kutoka mtu hadi mtu. Huyaendelea polepole na mara nyingi hudumu maisha yote. Ugunduzi wa mapema, mabadiliko ya maisha, na matibabu ya kawaida yanaweza kuyadhibiti.',
+      sections: [
+        {
+          heading: 'Asthma (Pumufupi)',
+          body: 'Hali ya muda mrefu ya mapafu ambayo njia za hewa zinavyaa na kuvimba, ikisababisha mdudu wa kupumua, kukohoa, shinikizo la kifua, na kupumua kwa shida. Visababishi ni pamoja na vumbi, moshi, chavua, baridi, na mazoezi. Matibabu: pampu (za kupunguza shambulio na za kuzuia). Epuka visababishi na daima bebaka pampu yako.',
+        },
+        {
+          heading: 'Kifafa (Epilepsy)',
+          body: 'Ugonjwa wa neva unaosababisha mtetemo unaojirudia kutokana na shughuli za ajabu za ubongo. Mtetemo hutofautiana kutoka kuartu macho kwa muda mfupi hadi mtetemo wa mwili. Matibabu: dawa za kuzuia kifafa zinazochukuliwa kwa uthabiti. Wakati wa kifafa: ushimkamate mtu, linda kichwa chake, mgeuze kwenye upande, na usitiwe kitu chochote kinywani. Tafuta msaada ikiwa kifafa chaendelea zaidi ya dakika 5.',
+        },
+        {
+          heading: 'Seli Mundu (Sickle Cell)',
+          body: 'Ugonjwa wa kurithi wa damu ambao seli nyekundu za damu zinakuwa ngumu na umbo la mundu, kuzuia mtiririko wa damu na kusababisha maumivu makali, upungufu wa damu, na uharibifu wa viungo. Huutokea Afrika kusini mwa Sahara. Matibabu: vitamini za asidi ya folic, udhibiti wa maumivu, maji mengi, na chanjo za kawaida. Upimaji wa watoto Wachanga ni muhimu. Ushauri wa jenetiki husaidia wanandoa kuelewa hatari.',
+        },
+        {
+          heading: 'Afya ya Akili',
+          body: 'Magonjwa ya afya ya akili kama unyogovu na wasiwasi ni ya kawaida na yanatibika. Unyogovu: huzuni ya kudumu, kupoteza hamu, uchovu, mabadiliko ya usingizi, na mawazo ya kujidhuru. Wasiwasi: wasiwasi mkubwa, kutotulia, mashambulizi ya hofu, na dalili za mwili kama mapigo ya haraka. Matibabu ni pamoja na ushauri, dawa, na msaada. Tafuta msaada mapema — ugonjwa wa akili sio udhaifu.',
+        },
+        {
+          heading: 'Ugonjwa wa Figo wa Muda Mrefu',
+          body: 'Upotevu wa polepole wa utendaji wa figo, mara nyingi unasababishwa na kisukari au shinikizo la damu lisilodhibitiwa. Dalili huonekana mwishoni: kuvimba miguu, uchovu, mabadiliko ya kukojoa, kichefuchefu. Kuzuia: dhibiti sukari na shinikizo la damu, epuka dawa za maumivu kupita kiasi, kunywa maji ya kutosha, na pima figo kwa mara kwa mara ukiwa na hatari.',
+        },
+        {
+          heading: 'Maungo (Arthritis)',
+          body: 'Kuvimba kwa maungo kunakosababisha maumivu, ugumu, na kupungua kwa mwendo. Osteoarthritis (chokocha) na rheumatoid arthritis (mfumo wa kinga) ni ya kawaida zaidi. Udhibiti: udhibiti wa uzito, mazoezi ya kupolea, physiotherapy, na dawa za kupunguza uvimbe. Mbinu za kulinda maungo na vifaa vya kusaidia husaidia shughuli za kila siku.',
+        },
+      ],
+      prevention: [
+        'Kula chakula bora chenye matunda, mboga, na nafaka nzima',
+        'Fanya mazoezi ya kawaida — angalau dakika 30, siku 5 kwa wiki',
+        'Epuka tumbaku na punguza unywaji pombe',
+        'Fanya uchunguzi wa afya wa kawaida kugundua magonjwa mapema',
+        'Chukua dawa zilizoagizwa kwa uthabiti na kamwe usiruke dozi',
+        'Dhibiti msongo wa fikra kupitia mapumziko, msaada wa kijamii, na usingizi wa kutosha',
+        'Jua historia ya familia yako na majadiliano na daktari kuhusu hatari',
+      ],
+    },
+  },
 ];

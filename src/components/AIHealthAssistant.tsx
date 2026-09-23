@@ -16,26 +16,26 @@ const translations = {
   en: {
     title: 'AI Health Assistant',
     placeholder: 'Ask about our hospital or health topics...',
-    welcome: "Hello! I am your AI Health Assistant. I can help you with hospital information (departments, services, appointments, prices, forms) and health education (infectious diseases, cancer, HIV/AIDS, women's health, blood pressure, nutrition, and disease prevention). You can also use the Symptoms Checker. How can I help you today?",
+    welcome: "Hello! I am your AI Health Assistant. I can help you with hospital information (departments, services, appointments, prices, forms) and health education (communicable diseases, non-communicable diseases, cancer, HIV/AIDS, women's health, blood pressure, nutrition, and disease prevention). You can also use the Symptoms Checker. How can I help you today?",
     quickActions: [
       'Departments', 'Services', 'Book Appointment', 'Prices',
-      'Infectious Diseases', 'Cancer Awareness', 'HIV & AIDS',
+      'Communicable Diseases', 'Non-Communicable Diseases', 'Cancer Awareness', 'HIV & AIDS',
       "Women's Health", 'Blood Pressure', 'Nutrition', 'Disease Prevention', 'First Aid',
     ],
     symptomsChecker: 'Symptoms Checker',
-    default: "I can help you with hospital info (departments, services, appointments, visiting hours, contact, prices, forms) or health education (infectious diseases, cancer, HIV/AIDS, women's health, blood pressure, nutrition, disease prevention, and first aid). What would you like to know?",
+    default: "I can help you with hospital info (departments, services, appointments, visiting hours, contact, prices, forms) or health education (communicable diseases, non-communicable diseases, cancer, HIV/AIDS, women's health, blood pressure, nutrition, disease prevention, and first aid). What would you like to know?",
   },
   sw: {
     title: 'Msaidizi wa Afya AI',
     placeholder: 'Uliza kuhusu hospitali au mada za afya...',
-    welcome: "Habari! Mimi ni Msaidizi wako wa Afya wa AI. Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, bei, fomu) na elimu ya afya (magonjwa ya kuambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, na kuzuia magonjwa). Unaweza pia kutumia Kipimo cha Dalili. Ninawezaje kukusaidia leo?",
+    welcome: "Habari! Mimi ni Msaidizi wako wa Afya wa AI. Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, bei, fomu) na elimu ya afya (magonjwa ya kuambukizwa, magonjwa yasiyoambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, na kuzuia magonjwa). Unaweza pia kutumia Kipimo cha Dalili. Ninawezaje kukusaidia leo?",
     quickActions: [
       'Idara', 'Huduma', 'Panga Miadi', 'Bei',
-      'Magonjwa ya Kuambukizwa', 'Ufahamu wa Saratani', 'VVU & UKIMWI',
+      'Magonjwa ya Kuambukizwa', 'Magonjwa Yasiyoambukizwa', 'Ufahamu wa Saratani', 'VVU & UKIMWI',
       'Afya ya Wanawake', 'Shinikizo la Damu', 'Lishe', 'Kuzuia Magonjwa', 'Msaada wa Kwanza',
     ],
     symptomsChecker: 'Kipimo cha Dalili',
-    default: 'Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, saa za ziara, mawasiliano, bei, fomu) au elimu ya afya (magonjwa ya kuambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, kuzuia magonjwa, na msaada wa kwanza). Ungependa kujua nini?',
+    default: 'Ninaweza kukusaidia kwa taarifa za hospitali (idara, huduma, miadi, saa za ziara, mawasiliano, bei, fomu) au elimu ya afya (magonjwa ya kuambukizwa, magonjwa yasiyoambukizwa, saratani, VVU/UKIMWI, afya ya wanawake, shinikizo la damu, lishe, kuzuia magonjwa, na msaada wa kwanza). Ungependa kujua nini?',
   },
 };
 
@@ -200,7 +200,8 @@ export default function AIHealthAssistant() {
   }, [isOpen, lang]);
 
   const quickActionToTopicId: Record<string, string> = {
-    'Infectious Diseases': 'infectious-diseases',
+    'Communicable Diseases': 'infectious-diseases',
+    'Non-Communicable Diseases': 'non-communicable-diseases',
     'Cancer Awareness': 'cancer',
     'HIV & AIDS': 'hiv',
     "Women's Health": 'womens-health',
@@ -208,6 +209,7 @@ export default function AIHealthAssistant() {
     'Nutrition': 'nutrition',
     'Disease Prevention': 'disease-prevention',
     'Magonjwa ya Kuambukizwa': 'infectious-diseases',
+    'Magonjwa Yasiyoambukizwa': 'non-communicable-diseases',
     'Ufahamu wa Saratani': 'cancer',
     'VVU & UKIMWI': 'hiv',
     'Afya ya Wanawake': 'womens-health',

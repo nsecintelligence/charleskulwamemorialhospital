@@ -155,7 +155,7 @@ export default function Navbar() {
       <div className="container-width">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center gap-2">
-            <LanguageToggle variant="light" iconOnly />
+            <LanguageToggle variant="nav" iconOnly />
             <Link to="/" className="flex items-center gap-2">
             {siteLogo ? (
               <img src={siteLogo} alt={siteName} className="h-8 w-auto" loading="lazy" />
